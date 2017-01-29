@@ -8,7 +8,9 @@
 		<tbody>
 		<tr style="height:40px;">
                         <th style="width: 48px; padding: 4px;">&nbsp;</th>
-                        <th style="text-align: left;" onmouseover="this.bgColor='#eeeeee';" onmouseout="this.bgColor='#ffffff';">Click on File/Folder" Name</th>
+                        <th style="text-align: left;" onmouseover="this.bgColor='#eeeeee';" onmouseout="this.bgColor='#ffffff';">Click on File/Folder" Name
+                         &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                         &emsp;&emsp;Size</th>
                     </tr>
                     <tr onmouseover="this.bgColor='#ffeeff';" onmouseout="this.bgColor='#ffffff';" onclick="window.location='/Softwares (A - F)/Softwares (A - F)/ABBYY FineReader 10.0.102.105?sortby=';">
                         <%= request.getAttribute("listservlet.message") %>

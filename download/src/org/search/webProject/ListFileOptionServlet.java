@@ -49,6 +49,7 @@ public class ListFileOptionServlet extends HttpServlet {
 		    	  }
 		    	  HTML+="<td><a href=\"DownloadServlet?file="+request.getParameter("type")+"/"+listOfFiles[i].getName()+"\">"+listOfFiles[i].getName()+"</a></td>";
 		    	  HTML+="\n";
+		    	  HTML+="<td>"+listOfFiles[i].length()/1024/1024+" MB&nbsp;&nbsp;&nbsp;&nbsp;"+"</td>";
 		    	  if(extension.equalsIgnoreCase("mp4")||extension.equalsIgnoreCase("webm")||extension.equalsIgnoreCase("mkv")||extension.equalsIgnoreCase("flv")||extension.equalsIgnoreCase("avi")||extension.equalsIgnoreCase("wmv")) {
 		    		  HTML+="<td style=\"width: 48px; text-align: left;\"><a href=\"PlayVideoServlet?file="+request.getParameter("type")+"/"+listOfFiles[i].getName()+"\" ><img alt=\"icon\" style=\"vertical-align: middle;\" src=\"images/PlayVideo.png\"></td>";
 			    	  HTML+="\n";
