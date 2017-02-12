@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Post Login</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<script type="text/javascript" src="js/jquery-1.5.2.js"></script>
+<script type="text/javascript" src="js/list.min.js"></script>
+<STYLE TYPE="text/css" TITLE="">
+.h {
+	color: white;
+	font-size: 19pt
+}
+</STYLE>
+<script type="text/javascript">
+	function logout() {
+		sessionStorage.clear();
+	}
+</script>
+<SCRIPT type="text/javascript">
+	var mydate = new Date();
+	window.onload = f1;
+	function f1() {
+		if (sessionStorage.firstname != null) {
+			var e = document.getElementById("timestamp1");
+			e.innerHTML = "Welcome " + sessionStorage.firstname;
+			populateList();
+		} else
+			document.location = "Login.html";
+	}
+	
+	function populateList(){
+		var loggedInUser = sessionStorage.firstname;
+		var url = "GetUserServlet";
+		var params = "action=" + "getusertasklist" + "&loggedInUser=" + loggedInUser;
+		$.ajax({
+			url : url,
+			data : params,
+			success : refreshList,
+			error : function() {
+				alert("Not working");
+			}
+		});
+	}
+	
+	function refreshList(z){
+		$("#tasklist").append(z);
+		var options = {
+				valueNames : [ 'feature', 'description' ]
+			};
+			var featureList = new List('example-list', options);
+	}
+</SCRIPT>
+
+</head>
+<body id="page1">
+	<div class="body1">
+		<div class="main">
+
+			<div class="wrapper">
+				<nav>
+					<ul id="menu">
+						<li><a href="AboutTasker.html">About Tasker</a></li>
+						<li><a href="AddTask.html">Add Task</a></li>
+						<li class="end"><a href="Main.html" onclick="logout()">Logout</a></li>
+					</ul>
+				</nav>
+				<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+				<span id="timestamp1" class="h"></span>
+
+			</div>
+			<div class="wrapper">
+				<h1>
+					<a href="Main.html" id="logo">Tasker</a>
+				</h1>
+			</div>
+			<div id="slogan">Tasks</div>
+			<div style="height:250px; width:300px; overflow:y;  padding-left: 1cm;">
+				<div id="example-list" style="width:600px; height:200px; border-radius: 25px; border: 2px solid #73AD21;padding: 20px;">
+					<input class="search"/><strong>&nbsp;Search Task</strong>
+					<ul id="tasklist" class="list">
+						<li/>
+					</ul>
+				</div>
+				<script>
+					var options = {
+						valueNames : [ 'feature', 'description' ]
+					};
+					var featureList = new List('example-list', options);
+				</script>
+			</div>
+		</div>
+	</div>
+	<div class="body2">
+		<div class="main">
+			<!-- footer -->
+			<footer>
+				<div class="wrapper">
+					<div class="pad1">
+						<div class="pad_left1">
+							<div class="wrapper"></div>
+							<div class="wrapper">
+								<article class="call">
+									<span class="call1">Call Us Now: </span><span class="call2">0974-244-2667</span>
+								</article>
+								<article class="col_4 pad_left2">
+									Copyright &copy; <a href="#">Jain & Co.</a> All Rights Reserved<br>
+									Design by <a target="_blank" href="">Vaibhav</a>
+								</article>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>

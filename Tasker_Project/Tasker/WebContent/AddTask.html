@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Add Task</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/>
+<script type="text/javascript" src="js/jquery-1.5.2.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.datetimepicker.full.js"></script>
+<STYLE TYPE="text/css" TITLE="">
+.h{color:white;font-size:19pt}
+
+</STYLE>
+<style type="text/css">
+#TextArea1 {
+	width: 161px;
+	height: 24px;
+	margin-left: 2px;
+}
+
+#Text4 {
+	width: 130px;
+	margin-left: 0px;
+}
+
+#Button1 {
+	width: 46px;
+}
+
+.style1 {
+	width: 100%;
+}
+
+.style2 {
+	width: 100px;
+}
+
+.style3 {
+	width: 100px;
+}
+
+.style4 {
+	width: 100px;
+}
+
+.style5 {
+	width: 45px;
+}
+
+.style6 {
+	width: 100px;
+}
+
+#TextArea2 {
+	width: 693px;
+	height: 115px;
+	margin-top: 0px;
+}
+
+#Text3 {
+	width: 130px;
+	height: 22px;
+	margin-left: 0px;
+	margin-top: 0px;
+}
+
+#Text1 {
+	width: 130px;
+}
+</style>
+
+<script type="text/javascript">
+     $(function(){
+         $("#startTime").datetimepicker();
+         $("#endTime").datetimepicker();
+     });
+     </script>
+
+<SCRIPT LANGUAGE="JavaScript">
+	window.onload = f1;
+	function f1()
+	{ if(sessionStorage.firstname!=null)
+	  {var e=document.getElementById("loggedInUser");
+	   e.innerHTML="Welcome "+sessionStorage.firstname;
+	  }
+	else
+		document.location="Postloginadmin.html";
+	   }
+	function addTaskFunction() {
+		var taskname = document.getElementById("taskname").value;
+		var taskdescription = document.getElementById("taskdescription").value;
+		var startTime = document.getElementById("startTime").value;
+		var endTime = document.getElementById("endTime").value;
+		var taskComment = document.getElementById("taskComment").value;
+		var loggedInUser = sessionStorage.firstname;
+		var taskStatus = document.getElementById("taskStatus").checked;
+		var errormessage1 = document.getElementById("errormessage");
+
+		if (taskname == '' || taskname == '' || startTime == '' || endTime == '') {
+			errormessage1.innerHTML = "Enter Details Correctly";
+			return;
+		}
+		
+		var url = "GetUserServlet";
+		var params = "action=" + "addtask" + "&loggedInUser=" + loggedInUser + "&taskname=" + taskname + "&taskdescription=" + taskdescription
+				+ "&startTime=" + startTime + "&endTime=" + endTime + "&taskStatus=" + taskStatus+ "&taskComment=" + taskComment;
+		$.ajax({
+			url : url,
+			data : params,
+			success : AddTaskResponse,
+			error : function() {
+				alert("enter details properly");
+			}
+		});
+		clear();
+	}
+	function clear() {
+		taskname.value = null;
+		taskdescription.value = null;
+		startTime.value = null;
+		endTime.value = null;
+		taskComment.value = null;
+	}
+
+	function AddTaskResponse(z) {
+		var errormessage1 = document.getElementById("errormessage");
+		if (z == "true") {
+			errormessage1.innerHTML = "Task added successfully";
+		} else
+			errormessage1.innerHTML = "Error while adding task";
+	}
+
+	function logout() {
+		sessionStorage.clear();
+		document.location = "Main.html"
+	}
+</SCRIPT>
+</head>
+<body id="page6">
+	<div class="body2">
+		<div class="main">
+			<!-- header -->
+			<header>
+				<div class="wrapper">
+					<nav>
+						<ul id="menu">
+							<li><a href="AboutTasker.html">About Tasker</a></li>
+							<li><a href="Postloginadmin.html">Home</a></li>
+							<li class="end"><a href="Main.html" onClick="logout()">Log Out</a></li>
+						</ul>
+					</nav>
+					<br>
+					&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					<span id="loggedInUser" class="h"></span>
+				</div>
+				<div class="wrapper">
+					<h1>
+						<a href="Main.html" id="logo">Tasker</a>
+					</h1>
+				</div>
+			</header>
+			<!-- / header -->
+		</div>
+	</div>
+	<div class="body2">
+		<div class="main">
+			<!-- content -->
+			<section id="content">
+				<div class="box1">
+					<div class="wrapper">
+						<article class="col1">
+							<div class="pad_left1">
+								<h2>Add Task</h2>
+											&nbsp;<strong>Task Name<strong>&nbsp;&nbsp;&nbsp;
+											<input id="taskname" type="text" style="background: lightgreen; width: 150px" />
+											<br>
+											<br>
+											&nbsp;Description&nbsp;&nbsp;
+											<textarea id="taskdescription" type="text"	style="background: lightgreen" rows="3" cols="18"></textarea>
+											<br>
+											<br>
+											&nbsp;Start Time&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="text" id="startTime" style="background: lightgreen; width: 150px" />
+											<br>
+											<br>
+											&nbsp;End Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="text" id="endTime" style="background: lightgreen; width: 150px" />
+											<br>
+											<br>
+											&nbsp;Comment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<textarea id="taskComment" type="text"	style="background: lightgreen" rows="3" cols="18"></textarea>
+											<br>
+											<br>
+											&nbsp;Status&nbsp;&nbsp;
+											<input type="checkbox" id="taskStatus" style="background: lightgreen; width: 150px" checked/>
+										</span>
+								<p style="width: 683px">
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+										style="color: red;" id="errormessage"></span> <br />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+										class="button" onClick="addTaskFunction()"><span><span>Save</span></span></a>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong><span
+									id="errormessage" style="font-size: 15px"></span></strong>
+							</div>
+					</div>
+					</article>
+					<article class="col2 pad_left2">
+						<div class="pad_left1">
+					</article>
+				</div>
+		</div>
+		</section>
+
+		<footer>
+			<div class="wrapper">
+				<div class="pad1">
+					<div class="pad_left1">
+						<div class="wrapper"></div>
+						<div class="wrapper">
+							<article class="call">
+								<span class="call1">Contact: </span><span class="call2">0974-244-2667</span>
+							</article>
+							<article class="col_4 pad_left2">
+								Copyright &copy; <a href="#">Jain & Co.</a> All Rights Reserved<br>
+								Design by <a target="_blank" href="">Vaibhav</a>
+							</article>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	</div>
+</body>
+</html>

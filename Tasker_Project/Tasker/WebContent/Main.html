@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Tasker</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<script type="text/javascript" src="js/jquery-1.5.2.js"></script>
+<script type="text/javascript">
+	var mydate = new Date();
+	window.onload = f1;
+	function f1() {
+		if (sessionStorage.firstname != null)
+			document.location = "Postloginadmin.html";
+		else {
+			var e = document.getElementById("timestamp");
+			e.innerHTML = mydate.getDate() + "/" + (mydate.getMonth() + 1)
+					+ "/" + mydate.getFullYear();
+		}
+	}
+</script>
+
+</head>
+<body id="page1">
+	<div class="body1">
+		<div class="main">
+			<!-- header -->
+			<header>
+				<div class="wrapper">
+					
+					<br />
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+						id="timestamp" style="color: white; font-size: 19pt">Time</span>
+				</div>
+				<div class="wrapper">
+					<h1>
+						<a href="Main.html" id="logo">Tasker</a>
+					</h1>
+				</div>
+				<div id="slogan">
+					Plan your tasks<span>Be Smarter</span>
+				</div>
+				<ul class="banners">
+					<li><a href="Loginadmin.html"><img
+							src="images/banner2_1.jpg" alt=""></a></li>
+					<li><a href="AboutTasker.html" onclick="window.close()"><img
+							src="images/banner3_1.jpg" alt=""></a></li>
+				</ul>
+			</header>
+			<!-- / header -->
+		</div>
+	</div>
+	<div class="body2">
+		<div class="main">
+			<!-- footer -->
+			<footer>
+				<div class="wrapper">
+					<div class="pad1">
+						<div class="pad_left1">
+							<div class="wrapper"></div>
+							<div class="wrapper">
+								<article class="call">
+									<span class="call1">Contact: </span><span class="call2">0974-244-2667</span>
+								</article>
+								<article class="col_4 pad_left2">
+									Copyright &copy; <a href="#">Jain & Co.</a> All Rights Reserved<br>
+									Design by <a target="_blank" href="">Vaibhav</a>
+								</article>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>

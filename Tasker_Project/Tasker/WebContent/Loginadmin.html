@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>LOGIN | User</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css">
+<link rel="stylesheet" href="css/layout.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script type="text/javascript" src="js/jquery-1.5.2.js"></script>
+
+<script type="text/javascript">
+	window.onload = f1;
+	function f1() {
+		if (sessionStorage.firstname != null)
+			document.location = "Postloginadmin.html";
+		var username = document.getElementById("txtUserName");
+		var password = document.getElementById("txtPassword");
+		username.value = "";
+		password.value = "";
+	}
+
+	function clearfunc() {
+		var username = document.getElementById("txtUserName");
+		var password = document.getElementById("txtPassword");
+		username.value = "";
+		password.value = "";
+	}
+</script>
+
+<script type="text/javascript">
+	function fnSubmit() {
+		var username1 = document.getElementById("txtUserName").value;
+		var password1 = document.getElementById("txtPassword").value;
+		var errormessage1 = document.getElementById("errormessage");
+
+		if (username1.value != '' && password1.value != '') {
+
+			var url = "GetUserServlet";
+			var params = "action=" + "login" + "&txtUserName=" + username1 + "&txtPassword=" + password1;
+			$.ajax({
+				url : url,
+				data : params,
+				success : loginstatus,
+				error : function() {
+					alert("not working");
+				}
+			});
+		} else {
+			errormessage1.innerHTML = "username and password cannot be left blank";
+		}
+	}
+
+	function loginstatus(z) {
+		var username1 = document.getElementById("txtUserName").value;
+		var password1 = document.getElementById("txtPassword")
+		var errormessage1 = document.getElementById("errormessage");
+		var email = document.getElementById("txtEmail");
+		if (z == "true") {
+			document.location = "Postloginadmin.html";
+			sessionStorage.firstname = username1;
+		} else {
+			errormessage1.innerHTML = "Invalid User Name or password";
+		}
+	}
+</script>
+</head>
+<body id="page5">
+	<div class="body1">
+		<div class="main">
+			<!-- header -->
+			<header>
+				<div class="wrapper">
+					<nav>
+						<ul id="menu">
+							<li><a href="AboutTasker.html">About Tasker</a></li>
+							<li class="end"><a href="Main.html">Home</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="wrapper">
+					<h1>
+						<a href="Main.html" id="logo">Tasker</a>
+					</h1>
+				</div>
+				<div id="slogan">
+					Plan Future <span>Be Ahead!</span>
+				</div>
+			</header>
+			<!-- / header -->
+		</div>
+	</div>
+	<div class="body2">
+		<div class="main">
+			<!-- content -->
+			<section id="content">
+				<div class="box1">
+					<div class="wrapper">
+						<article class="col1">
+							<div class="pad_left1">
+								<h2>Login</h2>
+								<form id="ContactForm">
+									<div>
+										<div class="wrapper">
+											<strong>Userid:&nbsp;</strong>
+											<div class="bg">
+												<input type="text" name="txtUserName" class="input"
+													id="txtUserName">
+
+											</div>
+										</div>
+										<div class="wrapper">
+											<strong>Password:</strong>
+											<div class="bg">
+												<input type="password" name="txtPassword" class="input"
+													id="txtPassword">
+											</div>
+										</div>
+										<a class="button" onClick="fnSubmit()"><span><span>Login</span></span></a>
+										<a class="button" id="clearbutton" onClick="clearfunc()"><span><span>Clear</span></span></a>
+										<a class="button" id="newUserButton" href="AddUser.html"><span><span>New User</span></span></a>
+									</div>
+								</form>
+							</div>
+						</article>
+						<article class="col2 pad_left2">
+							<div class="pad_left1">
+								<h2>
+									Miscellaneous <span>Info</span>
+								</h2>
+								<p id="errormessage">Enter userid and password</p>
+								<p>please check if capslock is on</p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</section>
+			<!-- content -->
+			<!-- footer -->
+			<footer>
+				<div class="wrapper">
+					<div class="pad1">
+						<div class="pad_left1">
+							<div class="wrapper"></div>
+						</div>
+					</div>
+				</div>
+				<footer>
+					<div class="wrapper">
+						<div class="pad1">
+							<div class="pad_left1">
+								<div class="wrapper"></div>
+								<div class="wrapper">
+									<article class="call">
+										<span class="call1">Contact: </span><span class="call2">0974-244-2667</span>
+									</article>
+									<article class="col_4 pad_left2">
+										Copyright &copy; <a href="#">Jain & Co.</a> All Rights
+										Reserved<br> Design by <a target="_blank" href="">Vaibhav</a>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</footer>
+		</div>
+	</div>
+</body>
+</html>
