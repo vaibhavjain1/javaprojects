@@ -1,0 +1,7 @@
+.logon 153.65.183.87/dbc,dbc;
+
+RELEASE LOCK (mdm34),OVERRIDE;
+
+ LOGOFF;
+
+ .QUIT;

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8">
+<title>Db Restore Utility</title>
+<link rel="stylesheet" href="./resource/copied.css">
+</head>
+
+<body id="wordpress-org">
+<div id="wporg-header"style="background-image: url(./resource/Head.png);background-repeat: no-repeat;background-position: 360px center;">
+</div>
+<div id="headline">
+	<div class="wrapper">
+		<h2>Help</h2>
+	</div>
+</div>
+<div id="pagebody">
+	<div class="wrapper">	
+		<div class="col-10" id="bodyContent">
+						<h2 class="pagetitle" style="margin-top:-16px;">DB Restore Utility</h2>
+
+<p style="font-size:105%">This utility is created only for<Strong> terakora </strong>employees So that users can archive, restore & delete DB and save installation time. Users are not allowed to share it outside.
+<br>This utility is in developing mode. So please use it carefully.
+</p>
+<ol style="margin-top:-8px;">
+<li>This utility will create one backup folder contains backup file & other sql files. The directory user selects to use it as backup directory must be empty.
+</li>
+<li>Backup directory contains one Database back info. Properties file. Which will give fair idea to user about which db is archived, when it is archived, DB IP etc. 
+</li>
+<li>
+This utility will archive & restore all the DB Present (along with children db) in DB Topology. No need to specify Children db separately.
+</li>
+<li>
+Lock Release will release the locks acquired due to abnormal termination of archiving or restoration of db.
+</li>
+<li>
+DB Delete will delete all objects present in database along with its children database objects. Use Fast delete option carefully because it will lock other users from accessing database.
+</li>
+</ol>
+<div style="background:#f9f9f9;border:1px solid #ddd;font-size:95%;padding-left:1.5em;margin-bottom:8px;">
+<a name="What_You_Most_Need_to_Know_About_DB_Restore_Util" id="What_You_Most_Need_to_Know_About_DB_Restore_Util"></a><h2> <span class="mw-headline">Requirements for using this software</span></h2>
+<ol style="list-style:square;margin-bottom:5px;">
+<li><a href="" title="">Arcmain is installed on your system. To test type arcmain in cmd.</a></li>
+<li><a href="" title="">Bteq is installed on your system.</a></li>
+<li><a href="" title="">Java 6 is installed on your system & Java environment variables are properly set.</a></li>
+</ol>
+<span style="display:block;clear:left;"></span>
+</div>
+
+<div style="background:#f9f9f9;border:1px solid #ddd;font-size:95%;padding-left:1.5em;margin-bottom:-28px;">
+<h2> <span class="mw-headline">What You Most Need to Know About DB Restore Utility</span></h2>
+<ol style="list-style:square;margin-bottom:5px;">
+<li><a href="" title="">Please Close all DB Connections & server for the DB you are going to operate on.</a></li>
+<li><a href="" title="">Never close window during archiving, restoration & Deletion operation. It may harm your db.</a></li>
+<li><a href="" title="">Never temper the backup files & other files created by software.</a></li>
+<li><a href="" title="">Do not start two operations simultaneously.</a></li>
+<li><a href="" class="" title="">You may see error code 8 in restoration log due to some backup tables not present. That's ok. Known issue</a></li>
+<li><a href="" class="" title="">Return Code 4 & 8 is for warnings, but the normal flow of the execution will continue.</a></li>
+</ol>
+<span style="display:block;clear:left;"></span>
+</div>
+<p><br>
+</p>
+<div>
+<div style="width:45%;float:left;padding-right:10px;">
+<a name="" id=""></a><h2> <span class="mw-headline"> Naming of Backup Folder </span></h2>
+<ul><li> <a href=""><Strong>DB_Version</strong> = specifies MDM version.</a>
+</li><li> <a href=""><Strong>_MT</strong> = If it’s multitable.</a>
+</li><li> <a href=""><Strong>_CAPP</strong> = If it’s Custom_app along with ISG done.</a>
+</li><li> <a href=""><Strong>_DATA</strong> = If test data has been added in instance.</a>
+</li><li> <a href=""><Strong>_Linux</strong> = If it is linux environment.</a>
+</li><li> <a href=""><Strong>_ISG</strong> = If ISG is done.</a>
+</li><li> <a href=""><Strong>_UISG</strong> = If ISG is done from upgraded version.</a>
+</li>
+</ul>
+</div><div style="width:45%;float:left">
+<a name="Write_a__Plugin" id="Write_a__Plugin"></a><h2> <span class="mw-headline"> Issues Fixed</span></h2>
+<ul><li> <a href="">Primary key issue for temporal tables</a>
+</li><li> <a href="">Index issues while restoring.</a>
+</li><li> <a href="">Index issues while Copying.</a>
+</li><li> <a href="">Db Locking during deletion.</a>
+</li></ul>
+Let say I’m archiving 3101 with custom app in Linux. Then folder Name will be – “DB_3101_CAPP_LINUX”
+</div>
+<div style="clear:both;"></div>
+</div>
+<div>
+<div style="background:#f9f9f9;border:1px solid #ddd;padding-left:1.5em;margin-bottom:10px;">
+<h2> <span class="mw-headline" style="font-size:80%;">Please forward any suggestion/Bug Report/improvements on Vaibhav.Jain@Teradata.com</span></h2>
+</div>
+</body></html>

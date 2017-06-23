@@ -1,0 +1,15 @@
+-- SQL commands to create new user
+
+.logon {DB_IP}/DBC,DBC;
+
+CREATE DATABASE "{NEWDB}" FROM "{PARENTDB}"
+AS PERM={NEWDBNOCHILDSPACE}
+SPOOL=52428800
+TEMPORARY = 52428800
+NO FALLBACK
+NO BEFORE JOURNAL
+NO AFTER JOURNAL;
+
+--Grants Required for new DB
+
+grant all on {NEWDB} to {PARENTDB};

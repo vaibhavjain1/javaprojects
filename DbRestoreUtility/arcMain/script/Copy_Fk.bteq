@@ -1,0 +1,11 @@
+.RUN FILE data/Login_Info.properties
+
+.COMPILE FILE script/Copy_Fk.sql;
+
+CALL REFRESH_SYS_DBC();
+
+CALL Copy_Fk();
+
+DROP PROCEDURE Copy_Fk;
+
+.quit;

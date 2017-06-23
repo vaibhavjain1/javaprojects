@@ -1,0 +1,45 @@
+BTEQ 14.10.00.00 Thu Jul 02 12:23:52 2015
+ 
++---------+---------+---------+---------+---------+---------+---------+----
+-- SQL commands to create new user
+
+.logon 153.65.183.87/DBC,
+
+ *** Logon successfully completed.
+ *** Teradata Database Release is 14.10.00.12                   
+ *** Teradata Database Version is 14.10.00.14                     
+ *** Transaction Semantics are BTET.
+ *** Session Character Set Name is 'ASCII'.
+ 
+ *** Total elapsed time was 1 second.
+ 
++---------+---------+---------+---------+---------+---------+---------+----
+
+CREATE DATABASE "SDFDS1234" FROM "UPGRADE_USERS"
+AS PERM=5.24288E7
+SPOOL=52428800
+TEMPORARY = 52428800
+NO FALLBACK
+NO BEFORE JOURNAL
+NO AFTER JOURNAL;
+
+ *** Database has been created. 
+ *** Total elapsed time was 1 second.
+
+
++---------+---------+---------+---------+---------+---------+---------+----
+
+--Grants Required for new DB
+
+grant all on SDFDS1234 to UPGRADE_USERS;
+
+ *** Grant accepted. 
+ *** Total elapsed time was 1 second.
+
+
++---------+---------+---------+---------+---------+---------+---------+----
+ *** Warning: EOF on INPUT stream.
+ *** BTEQ exiting due to EOF on stdin.
+
+ *** Exiting BTEQ...
+ *** RC (return code) = 0 

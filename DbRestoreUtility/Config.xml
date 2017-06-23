@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\softwares\mdm_qa\Utilities\DbRestoreUtility\DbRestore.jar</jar>
+  <outfile>C:\softwares\mdm_qa\Utilities\DbRestoreUtility\DbRestore.exe</outfile>
+  <errTitle>Common yaar. Install Java First.</errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>high</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>C:\softwares\mdm_qa\Utilities\DbRestoreUtility\resource\images.ico</icon>
+  <singleInstance>
+    <mutexName>Nothing_just_for_restricting_users_from_doing_useless_things</mutexName>
+    <windowTitle></windowTitle>
+  </singleInstance>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <minVersion>1.0.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <splash>
+    <file>C:\softwares\mdm_qa\Utilities\DbRestoreUtility\resource\splash_trans.bmp</file>
+    <waitForWindow>true</waitForWindow>
+    <timeout>2</timeout>
+    <timeoutErr>false</timeoutErr>
+  </splash>
+</launch4jConfig>
