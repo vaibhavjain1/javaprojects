@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="impl" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IService1_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://acts30:7000/service?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://acts30:7000/service?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://acts30:7000/service?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService1_Duplexcall_InputMessage">
+    <wsdl:part name="parameters" element="tns:Duplexcall" />
+  </wsdl:message>
+  <wsdl:message name="IService1_Duplexcall_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DuplexcallResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_chatrequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:chatrequest" />
+  </wsdl:message>
+  <wsdl:message name="IService1_chatrequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:chatrequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_onlineusers_InputMessage">
+    <wsdl:part name="parameters" element="tns:onlineusers" />
+  </wsdl:message>
+  <wsdl:message name="IService1_onlineusers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:onlineusersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_sendmsg_InputMessage">
+    <wsdl:part name="parameters" element="tns:sendmsg" />
+  </wsdl:message>
+  <wsdl:message name="IService1_sendmsg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:sendmsgResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_servertoclient_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:servertoclient" />
+  </wsdl:message>
+  <wsdl:message name="IService1_servertoclient_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:servertoclientResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService1">
+    <wsdl:operation name="Duplexcall">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/Duplexcall" message="tns:IService1_Duplexcall_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/DuplexcallResponse" message="tns:IService1_Duplexcall_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="chatrequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/chatrequest" message="tns:IService1_chatrequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/chatrequestResponse" message="tns:IService1_chatrequest_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="onlineusers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/onlineusers" message="tns:IService1_onlineusers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/onlineusersResponse" message="tns:IService1_onlineusers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="sendmsg">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/sendmsg" message="tns:IService1_sendmsg_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/sendmsgResponse" message="tns:IService1_sendmsg_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="servertoclient">
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/servertoclient" message="tns:IService1_servertoclient_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/servertoclientResponse" message="tns:IService1_servertoclient_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IService1" type="tns:IService1">
+    <wsp:PolicyReference URI="#NetTcpBinding_IService1_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Duplexcall">
+      <soap12:operation soapAction="http://tempuri.org/IService1/Duplexcall" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chatrequest">
+      <soap12:operation soapAction="http://tempuri.org/IService1/chatrequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="onlineusers">
+      <soap12:operation soapAction="http://tempuri.org/IService1/onlineusers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendmsg">
+      <soap12:operation soapAction="http://tempuri.org/IService1/sendmsg" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="servertoclient">
+      <soap12:operation soapAction="http://tempuri.org/IService1/servertoclient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="impl">
+    <wsdl:port name="NetTcpBinding_IService1" binding="tns:NetTcpBinding_IService1">
+      <soap12:address location="net.tcp://acts30:7001/service/opr" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://acts30:7001/service/opr</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DAC30@ACTS.CDACBLR.COM</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

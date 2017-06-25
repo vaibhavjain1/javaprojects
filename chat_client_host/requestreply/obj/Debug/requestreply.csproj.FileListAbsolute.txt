@@ -1,0 +1,22 @@
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\requestreply\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\requestreply\bin\Debug\requestreply.dll.config
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\requestreply\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\requestreply\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\requestreply\obj\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\requestreply\obj\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\requestreply\bin\Debug\requestreply.dll.config
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\requestreply\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\requestreply\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\requestreply\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\requestreply\obj\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\requestreply\obj\Debug\requestreply.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\requestreply\bin\Debug\requestreply.dll.config
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\requestreply\bin\Debug\requestreply.dll
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\requestreply\bin\Debug\requestreply.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\requestreply\obj\Debug\requestreply.dll
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\requestreply\obj\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\requestreply\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\requestreply\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\requestreply\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\requestreply\obj\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\requestreply\obj\Debug\requestreply.pdb

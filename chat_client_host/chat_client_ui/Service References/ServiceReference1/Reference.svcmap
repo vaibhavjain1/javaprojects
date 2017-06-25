@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0d93b872-7f20-4230-b020-a99ccfabfed8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:7000/service/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d2ac4d0c-b629-4645-8cf5-ddcbed4ac40b" SourceId="1" SourceUrl="http://localhost:7000/service/mex" />
+    <MetadataFile FileName="service3.xsd" MetadataType="Schema" ID="ceed4de6-0673-413e-b7a7-b7f0820507db" SourceId="1" SourceUrl="http://localhost:7000/service/mex" />
+    <MetadataFile FileName="service31.xsd" MetadataType="Schema" ID="6aaab779-fa78-4c0c-bea0-72c1e0731379" SourceId="1" SourceUrl="http://localhost:7000/service/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="fb9b2fe8-c1e2-45cb-83bc-4e5e352f8f7f" SourceId="1" SourceUrl="http://localhost:7000/service/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

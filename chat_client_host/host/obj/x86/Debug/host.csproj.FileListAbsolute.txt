@@ -1,0 +1,40 @@
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\bin\Debug\host.exe.config
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\bin\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\bin\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\obj\x86\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\host\obj\x86\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\bin\Debug\host.exe.config
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\obj\x86\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\obj\x86\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\bin\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\bin\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\host\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\bin\Debug\host.exe.config
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\obj\x86\Debug\host.exe
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\obj\x86\Debug\host.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\bin\Debug\host.exe
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\bin\Debug\host.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\bin\Debug\requestreply.dll
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\bin\Debug\requestreply.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\host\obj\x86\Debug\host.csprojResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\bin\Debug\host.exe.config
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\obj\x86\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\obj\x86\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\bin\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\host\bin\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\bin\Debug\host.exe.config
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\obj\x86\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\obj\x86\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\bin\Debug\host.exe
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\bin\Debug\host.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\bin\Debug\requestreply.dll
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\bin\Debug\requestreply.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\chat\host\obj\x86\Debug\ResolveAssemblyReference.cache

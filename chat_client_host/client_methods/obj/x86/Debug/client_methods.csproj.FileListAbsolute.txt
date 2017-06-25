@@ -1,0 +1,12 @@
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\client_methods\bin\Debug\client_methods.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\client_methods\bin\Debug\client_methods.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\client_methods\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\client_methods\obj\x86\Debug\client_methods.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\client_methods\obj\x86\Debug\client_methods.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\Temporary\requestreply\client_methods\bin\Debug\client_methods.exe.config
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\client_methods\bin\Debug\client_methods.exe.config
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\client_methods\obj\x86\Debug\client_methods.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\client_methods\obj\x86\Debug\client_methods.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\client_methods\bin\Debug\client_methods.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\client_methods\bin\Debug\client_methods.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\client_methods\obj\x86\Debug\ResolveAssemblyReference.cache

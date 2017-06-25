@@ -1,0 +1,40 @@
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\bin\Debug\chat_client_ui.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\bin\Debug\chat_client_ui.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\MainWindow.baml
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\MainWindow.g.cs
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\App.g.cs
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui_MarkupCompile.cache
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.g.resources
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.Properties.Resources.resources
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.exe
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.pdb
+C:\Documents and Settings\DAC30\Desktop\Projects\day11\requestreply\chat_client_ui\bin\Debug\chat_client_ui.exe.config
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\bin\Debug\chat_client_ui.exe.config
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.exe
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\bin\Debug\chat_client_ui.exe
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\bin\Debug\chat_client_ui.pdb
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\MainWindow.baml
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\App.g.cs
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui_MarkupCompile.cache
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.g.resources
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.Properties.Resources.resources
+C:\Users\Owner\Documents\dotnet\requestreply\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.csproj.GenerateResource.Cache
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\bin\Debug\chat_client_ui.exe.config
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.exe
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\bin\Debug\chat_client_ui.exe
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\bin\Debug\chat_client_ui.pdb
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\MainWindow.baml
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\MainWindow.g.cs
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\App.g.cs
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui_MarkupCompile.cache
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.g.resources
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\chat_client_ui.Properties.Resources.resources
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\DAC30\Desktop\chat-final\requestreply\chat_client_ui\obj\x86\Debug\GenerateResource.write.1.tlog
