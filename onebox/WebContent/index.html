@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>One Box Report Generation</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/layout.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.datetimepicker.css" />
+<script type="text/javascript" src="js/jquery-1.5.2.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.datetimepicker.full.js"></script>
+<STYLE TYPE="text/css" TITLE="">
+td {
+	font-weight: bold;
+}
+
+input.inputbox {
+	border-radius: 25px;
+	border: 2px solid #73AD21;
+	padding: 4px;
+	width: 200px;
+	height: 20px;
+}
+#cover {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   opacity: 0.70;
+   background: #aaa;
+   z-index: 10;
+   display: none;
+   text-align: center;
+   font-weight: bold;
+   font-size: xx-large;
+}
+</STYLE>
+<script type="text/javascript">
+	$(function() {
+		$("#startTime").datetimepicker({
+			format: 'Y-m-d H:i'
+		});
+		$("#endTime").datetimepicker({
+			format: 'Y-m-d H:i'
+		});
+		$("#prevdate").datetimepicker({
+			timepicker:false,
+			format: 'Y-m-d'
+		});
+	});
+</script>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+	function addTaskFunction() {
+		document.getElementById("errormessage").innerHTML="";
+		document.getElementById("successmessage").innerHTML="";
+		var jiraid = document.getElementById("jiraid").value;
+		var buildid = document.getElementById("buildid").value;
+		var startTime = document.getElementById("startTime").value;
+		var endTime = document.getElementById("endTime").value;
+		var oneboxmachine = document.getElementById("oneboxmachine").value;
+		var email = document.getElementById("email").value;
+		var prevdate = document.getElementById("prevdate").value;
+		var fulllog = document.getElementById("fulllog").checked;
+		
+		/*var loggedInUser = sessionStorage.firstname;
+		var errormessage = document.getElementById("errormessage");
+		*/
+		
+		if(!$('#jiraid')[0].checkValidity()){ $('#jiraid').css('border-color', 'red');  return;	} else $('#jiraid').css('border-color', 'green');
+		if(!$('#buildid')[0].checkValidity()){ $('#buildid').css('border-color', 'red');  return;	} else $('#buildid').css('border-color', 'green');
+		if(!$('#startTime')[0].checkValidity()){ $('#startTime').css('border-color', 'red');  return;	} else $('#startTime').css('border-color', 'green');
+		if(!$('#endTime')[0].checkValidity()){ $('#endTime').css('border-color', 'red');  return;	} else $('#endTime').css('border-color', 'green');
+		if(!$('#oneboxmachine')[0].checkValidity()){ $('#oneboxmachine').css('border-color', 'red');  return;	} else $('#oneboxmachine').css('border-color', 'green');
+		if(!$('#email')[0].checkValidity()){ $('#email').css('border-color', 'red');  return;	} else $('#email').css('border-color', 'green');
+		
+		var url = "UiServlet";
+		var params = "action=" + "performonebox" + "&jiraid=" + jiraid
+				+ "&buildid=" + buildid + "&startTime="
+				+ startTime + "&endTime=" + endTime + "&oneboxmachine="
+				+ oneboxmachine + "&email=" + email + "&prevdate=" + prevdate + "&fulllog=" + fulllog;
+		$.ajax({
+			url : url,
+			data : params,
+			beforeSend: function(){
+				$("#cover").fadeIn();
+			},
+			type : 'post',
+			success : TaskResponse,
+			error : function(z) {
+				debugger;
+				$("#cover").fadeOut();
+				alert("enter details properly");
+			}
+		});
+	}
+	function clearfields() {
+		jiraid.value = null;
+		buildid.value = null;
+		startTime.value = null;
+		endTime.value = null;
+		oneboxmachine.value = null;
+		email.value = null;
+		prevdate.value = null;
+		fulllog.checked = false;
+	}
+
+	function fillSampleData(){
+		jiraid.value = "PPPLPAYPT-22259";
+		buildid.value = "34281398";
+		startTime.value = "2017-06-12 02:08";
+		endTime.value = "2017-06-12 04:08";
+		oneboxmachine.value = "slccapaymenthelix3001b";
+		email.value = "vaibhjain@paypal.com";
+		prevdate.value = "2017-06-11";
+		fulllog.checked = false;
+	}
+	
+	function TaskResponse(z) {
+		$("#cover").fadeOut();
+		var errormessage = document.getElementById("errormessage");
+		var successmessage = document.getElementById("successmessage");
+		if (z["Status"] == "200") {
+			successmessage.innerHTML = z["Message"];
+		} else
+			errormessage.innerHTML = z["Message"];
+	}
+
+</SCRIPT>
+</head>
+<body id="page6">
+	<div class="body2">
+		<div class="main">
+			<!-- header -->
+			<header>
+				<div class="wrapper">
+					<nav>
+						<ul id="menu">
+							<li><a
+								href="https://engineering.paypalcorp.com/cal/cal_idsearch.html"
+								target="blank">Cal Search</a></li>
+							<li><a
+								href="https://engineering.paypalcorp.com/cal/regexui/"
+								target="blank">Cal Hadoop</a></li>
+							<li class="end"><a
+								href="https://engineering.paypalcorp.com/spotlight/SpotlightWeb/Service.html?service=MoneyPlanningServ&type=state"
+								target="blank">Spotlight</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="wrapper">
+					<br>
+					<center>
+						<a href="" id="logo"></a>
+					</center>
+				</div>
+			</header>
+		</div>
+	</div>
+	<div class="body2">
+		<div class="main">
+			<!-- content -->
+			<section id="content">
+				<div class="box1">
+					<div class="wrapper">
+						<article class="col1">
+							<div class="pad_left1">
+								<h2>
+									<span align='right'>One box details</span>
+								</h2>
+								<span style="color: red; padding-left:5em" id="errormessage"></span><br>
+								<span style="color: green; padding-left:11em" id="successmessage"></span><br>
+								<table border='0' width='420px' cellpadding='0' cellspacing='0'
+									align='right'>
+									<tr>
+										<td align='left' style="padding-top:0.3em">Jira Id:</td>
+										<td><input id="jiraid" type='text' name='name' class='inputbox' required="required"></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left' style="padding-top:0.3em">Build Id:</td>
+										<td><input id="buildid" type='text' name='name' class='inputbox' required="required"></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left' style="padding-top:0.3em">Start Time:</td>
+										<td><input id="startTime" type='text' name='name'
+											class='inputbox' required="required">PST</td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left' style="padding-top:0.3em">End Time:</td>
+										<td><input id="endTime" type='text' name='name'
+											class='inputbox' required="required">PST</td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left' style="padding-top:0.3em">One box Machine:</td>
+										<td><input id="oneboxmachine" type='text' name='name' class='inputbox'
+											required="required" maxlength="24"></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left' style="padding-top:0.3em">Email:</td>
+										<td><input id="email" type='email' name='name' class='inputbox'
+											required="required"></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left' style="padding-top:0.3em">Compare Previous Day:</td>
+										<td><input id="prevdate" type='text' name='name' title="Keep empty if don't want to compare" class='inputbox'></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td align='left'>Full Log:</td>
+										<td><input id="fulllog" type="checkbox" id="taskStatus"
+											style="background: lightgreen; width: 150px" /></td>
+									</tr>
+									<tr>
+										<td>&nbsp;</td>
+									</tr>
+								</table>
+								<span style="padding-left:12.5em">&nbsp;</span>
+								<a class="button" onClick="addTaskFunction()"><span><span>Generate One Box Report</span></span></a>
+								<a class="button" onClick="clearfields()"><span><span>Clear</span></span></a>
+								<a class="button" onClick="fillSampleData()"><span><span>Sample</span></span></a>
+							</div>
+					</div>
+					</article>
+					<article class="col2 pad_left2">
+						<div class="pad_left1">
+					</article>
+				</div>
+		</div>
+		</section>
+
+		<footer>
+			<div class="wrapper">
+				<div class="pad1">
+					<div class="pad_left1">
+						<div class="wrapper"></div>
+						<div class="wrapper">
+							<!--article class="call">
+								<span class="call1">Contact: </span><span class="call2">0974-244-2667</span>
+							</article-->
+							<article class="col_4 pad_left2">
+								Designed by <a target="_blank" href="http://l-bng-25005197/onebox/">Vaibhav</a>
+							</article>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<div id="cover"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>Processing you request. Please wait...</div>
+</body>
+</html>
