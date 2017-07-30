@@ -12,6 +12,8 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import InvoiceUI.ProjectConstants;
+
 public class InvoicePrinter {
 
 	private BaseFont bfBold;
@@ -138,12 +140,12 @@ public class InvoicePrinter {
 			cb.lineTo(520, 320);
 			cb.stroke();
 
-			createHeadingsH1(cb, 238, 763, "Tax Invoice");
-			createHeadingsH3(cb, 49, 740, "Naresh Kiran Company");
-			createContent(cb, 49, 728, "19A GADODIA MARKET",PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 49, 716, "KHARI BAOLI",PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 49, 702, "GSTIN/UIN: 07AAJPK2146C1Z3",PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 49, 690, "E-Mail : NKCG1986@GMAIL.COM",PdfContentByte.ALIGN_LEFT);
+			createHeadingsH1(cb, 238, 763, ProjectConstants.taxInvoiceHeading);
+			createHeadingsH3(cb, 49, 740, ProjectConstants.sellerName);
+			createContent(cb, 49, 728, ProjectConstants.sellerAddressLine1,PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 49, 716, ProjectConstants.sellerAddressLine2,PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 49, 702, ProjectConstants.sellerAddressLine3,PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 49, 690, ProjectConstants.sellerEmail,PdfContentByte.ALIGN_LEFT);
 			
 			// Invoice Detail box Text Headings
 			createContent(cb, 47, 585, "SI",PdfContentByte.ALIGN_LEFT);
