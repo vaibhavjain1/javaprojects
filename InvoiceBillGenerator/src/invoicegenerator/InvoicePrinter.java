@@ -27,8 +27,6 @@ public class InvoicePrinter {
 			System.err.println("Usage: java " + generateInvoice.getClass().getName() + " c:/exportpdf.pdf");
 			System.exit(1);
 		}
-
-		// pdfFilename = args[0].trim();
 		generateInvoice.createPDF(pdfFilename);
 
 	}

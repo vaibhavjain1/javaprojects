@@ -31,4 +31,31 @@ public class ProjectConstants {
 	public static String amountHeading = "Amount";
 
 	public static String baradana = "BARDANA";
+	public static String majdoori = "MAJDOORI";
+	public static String outputCGST = "OUTPUT CGST";
+	public static String outputSGST = "OUTPUT SGST";
+	public static String total = "Total";
+	public static String amountChargableInwords = "Amount Chargeable (in words)";
+	public static String eoe = "E. & O.E";
+	
+	public static String taxableValue = "Taxable Value";
+	public static String centralTax = "Central Tax";
+	public static String stateTax = "State Tax";
+	public static String rate = "Rate";
+	public static String amount = "Amount";
+	
+	// Footer
+	public static String taxAmountInwords = "Tax Amount (in words) :";
+	public static String companyPan = "Company's PAN : AAJPK2146C";
+	public static String decleration = "Declaration";
+	public static String declerationLine1 = "1. All disputes shall be settled in Delhi Jurisdiction only.";
+	public static String declerationLine2 = "2. Certified that the particulars given above are true and correct.";
+	public static String companyBankDetails = "Company's Bank Details";
+	public static String bankName = "Bank Name : United Bank of India";
+	public static String bankAcNo = "A/c No. : 0414050013049";
+	public static String branchIfscCode = "Branch & IFS Code : Khari Baoli & UTBI0KHB712";
+	public static String forNareshComp = "for Naresh Kirana Company";
+	public static String authSign = "Authorised Signatory";
+	public static String compInvoice = "This is a Computer Generated Invoice";
+	
 }

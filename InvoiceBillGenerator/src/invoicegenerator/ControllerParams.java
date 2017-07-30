@@ -61,13 +61,13 @@ class Good{
 	
 	public Good(int siNo, String descriptionOfGoods, double gstRate, double quantity, double rate, double amount) {
 		this.siNo = siNo;
-		DescriptionOfGoods = descriptionOfGoods;
+		this.DescriptionOfGoods = descriptionOfGoods;
 		this.hsn_sac = "0908";
 		this.gstRate = gstRate;
 		this.quantity = quantity;
 		this.rate = rate;
 		this.unit = "kg";
-		Amount = amount;
+		this.Amount = amount;
 	}
 
 	@Override
@@ -79,37 +79,34 @@ class Good{
 	
 }
 
-class InputParams {
+public class ControllerParams{
 	
-	String invoiceNumber;
-	Date date;
-	String deliveryNote;
-	String despatchDocumentNo;
-	String deliveryNoteDate;
-	String despatchedThrough;
-	String destination;
-	String buyerName;
-	String buyerAddressLine1;
-	String buyerAddressLine2;
-	String buyerAddressLine3;
-	String buyerAddressLine4;
-	String buyerAddressLine5;
-	
-	public void setInvoiceNumber(int invoiceNumber) {
-		try {
-			this.invoiceNumber = "NKC/SUPLY/"+String.valueOf(invoiceNumber);
-		} catch (Exception e) {
-			logger.error("Error while setting invoice number:"+invoiceNumber);
+	public class BillHeaderInputParams {
+		
+		public String invoiceNumber;
+		public String date;
+		public String deliveryNote;
+		public String despatchDocumentNo;
+		public String deliveryNoteDate;
+		public String despatchedThrough;
+		public String destination;
+		public String buyerName;
+		public String buyerAddressLine1;
+		public String buyerAddressLine2;
+		public String buyerAddressLine3;
+		public String buyerAddressLine4;
+		public String buyerAddressLine5;
+		
+		public void setInvoiceNumber(String string) {
+			try {
+				this.invoiceNumber = "NKC/SUPLY/"+string;
+			} catch (Exception e) {
+				logger.error("Error while setting invoice number:"+string);
+			}
 		}
+		
 	}
-	
-	public void setDate(String currDate){
-		try {
-			DateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-			this.date = formatter.parse(currDate);
-		} catch (ParseException e) {
-			logger.error("Error while setting Date:"+currDate);
-		}
-	}
+
 	
 }
+

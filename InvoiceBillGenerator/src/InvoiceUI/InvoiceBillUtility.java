@@ -2,8 +2,10 @@ package InvoiceUI;
 
 import static invoicegenerator.Utilities.logger;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -24,7 +26,6 @@ public class InvoiceBillUtility {
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-
 			@Override
 			public void run() {
 				InvoiceBillUtility window = new InvoiceBillUtility();
@@ -40,21 +41,23 @@ public class InvoiceBillUtility {
 		logger.info("Setting layout of main window completed");
 	}
 	
-	private void initialize(){
+	private void initialize() {
 		frame = new JFrame();
-		
+
 		frame = new JFrame();
-		frame.setBounds(100, 100, 850, 950);
+		frame.setBounds(100, 100, 850, 1000);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
-		
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+		frame.setLocation(x, y-20);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		frame.getContentPane().add(tabbedPane);
-		
+
 		billPanel = new BillPanel();
-		billPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null,
-				null, null));
+		billPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		tabbedPane.addTab(ProjectConstants.taxInvoiceHeading, null, billPanel, null);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -79,9 +82,8 @@ public class InvoiceBillUtility {
 					images = ImageIO.read(imageFile);
 					frame.setIconImage(images);
 				} catch (IOException e) {
-					System.out.println("Could not find app icon : "
+					logger.error("Could not find app icon : "
 							+ ProjectConstants.frameIcon);
-					// e.printStackTrace();
 				}
 				frame.setTitle(ProjectConstants.ApplicationName);
 				
