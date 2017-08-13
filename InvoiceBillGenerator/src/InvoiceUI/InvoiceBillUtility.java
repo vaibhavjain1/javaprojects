@@ -1,6 +1,6 @@
 package InvoiceUI;
 
-import static invoicegenerator.Utilities.logger;
+import static utilities.InvoiceUtil.logger;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -45,7 +45,7 @@ public class InvoiceBillUtility {
 		frame = new JFrame();
 
 		frame = new JFrame();
-		frame.setBounds(100, 100, 850, 1000);
+		frame.setBounds(100, 100, 850, 735);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));

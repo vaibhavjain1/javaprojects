@@ -1,4 +1,4 @@
-package invoicegenerator;
+package utilities;
 
 public class NumberToWord  
 

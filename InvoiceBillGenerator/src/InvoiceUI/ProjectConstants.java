@@ -20,8 +20,13 @@ public class ProjectConstants {
 	public static String despatchedThroughHeading = "Despatched through";
 	public static String destinationHeading = "Destination";
 	public static String backgroundImage = "resources/slide_48.jpg";
+	public static String generatedPdfFolder = "resources/";
+	public static String nkcSupply = "NKC/SUPPLY/";
+	public static int maxItems = 4;
+	
 	/* Table Headings */
-	public static String siNoHeading = "SI No.";
+	public static String siHeading = "SI";
+	public static String NumHeading = "No.";
 	public static String descriptionOfGoodsHeading = "Description of Goods";
 	public static String hsnSacHeading = "HSN/SAC";
 	public static String gstRateHeading = "GST Rate";
@@ -30,15 +35,17 @@ public class ProjectConstants {
 	public static String perHeading = "per";
 	public static String amountHeading = "Amount";
 
-	public static String baradana = "BARDANA";
+	public static String bardana = "BARDANA";
 	public static String majdoori = "MAJDOORI";
 	public static String outputCGST = "OUTPUT CGST";
 	public static String outputSGST = "OUTPUT SGST";
+	public static String roundOff = "ROUND OFF";
 	public static String total = "Total";
 	public static String amountChargableInwords = "Amount Chargeable (in words)";
 	public static String eoe = "E. & O.E";
 	
-	public static String taxableValue = "Taxable Value";
+	public static String taxableHeading = "Taxable";
+	public static String valueHeading = "Value";
 	public static String centralTax = "Central Tax";
 	public static String stateTax = "State Tax";
 	public static String rate = "Rate";
@@ -46,10 +53,12 @@ public class ProjectConstants {
 	
 	// Footer
 	public static String taxAmountInwords = "Tax Amount (in words) :";
-	public static String companyPan = "Company's PAN : AAJPK2146C";
+	public static String companyPan = "Company's PAN :";
+	public static String companyPanNumber = "AAJPK2146C";
 	public static String decleration = "Declaration";
 	public static String declerationLine1 = "1. All disputes shall be settled in Delhi Jurisdiction only.";
-	public static String declerationLine2 = "2. Certified that the particulars given above are true and correct.";
+	public static String declerationLine2 = "2. Certified that the particulars given above are true and";
+	public static String declerationLine3 = "correct.";
 	public static String companyBankDetails = "Company's Bank Details";
 	public static String bankName = "Bank Name : United Bank of India";
 	public static String bankAcNo = "A/c No. : 0414050013049";

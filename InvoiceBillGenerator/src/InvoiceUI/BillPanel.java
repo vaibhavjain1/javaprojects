@@ -5,6 +5,11 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -13,7 +18,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -26,11 +30,15 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 import invoicegenerator.ControllerParams;
+import invoicegenerator.ControllerParams.AllGoods;
 import invoicegenerator.ControllerParams.BillHeaderInputParams;
+import invoicegenerator.ControllerParams.Good;
+import invoicegenerator.InvoicePrinter;
 
 class BreakUpTableModel extends AbstractTableModel {
+	private static final long serialVersionUID = 1L;
 
-	private String breakUpTableColumnNames[] = { ProjectConstants.hsnSacHeading, ProjectConstants.taxableValue,
+	private String breakUpTableColumnNames[] = { ProjectConstants.hsnSacHeading, ProjectConstants.taxableHeading+ProjectConstants.valueHeading,
 			"C.T. " + ProjectConstants.rate, "C.T. " + ProjectConstants.amount, "S.T. " + ProjectConstants.rate, "S.T. " + ProjectConstants.amount };
 	
 	private Object[][] totalData = {
@@ -82,7 +90,6 @@ public class BillPanel extends JPanel{
 	private JTextField deliveryNoteDateTextField;
 	private JTextField despatchedThroughTextField;
 	private JTextField destinationTextField;
-	private JTextArea notInuseTextArea;
 	private JScrollPane billTableScrollPane;
 	private JTable billTable;
 	private JTable breakUpTable;
@@ -93,7 +100,7 @@ public class BillPanel extends JPanel{
 	class BillTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = 1L;
 
-		private String[] columnNames = { ProjectConstants.siNoHeading, ProjectConstants.descriptionOfGoodsHeading,
+		private String[] columnNames = { ProjectConstants.siHeading+ProjectConstants.NumHeading, ProjectConstants.descriptionOfGoodsHeading,
 				ProjectConstants.hsnSacHeading, ProjectConstants.gstRateHeading+" (%)", ProjectConstants.quantityHeading+" (kg)",
 				ProjectConstants.rateHeading, ProjectConstants.perHeading, ProjectConstants.amountHeading };
 
@@ -102,7 +109,7 @@ public class BillPanel extends JPanel{
 				{ "2", "", "0908", new Double(5.0), new Double(0), new Double(0), "kg", new Double(0) },
 				{ "3", "", "0908", new Double(5.0), new Double(0), new Double(0), "kg", new Double(0) },
 				{ "4", "", "0908", new Double(5.0), new Double(0), new Double(0), "kg", new Double(0) },
-				{ null, ProjectConstants.baradana, null, null, null, null, null, new Double(0) },
+				{ null, ProjectConstants.bardana, null, null, null, null, null, new Double(0) },
 				{ null, ProjectConstants.majdoori, null, null, null, null, null, new Double(0) },
 				{ null, ProjectConstants.outputCGST, null, null, null, null, null, new Double(0) },
 				{ null, ProjectConstants.outputSGST, null, null, null, null, null, new Double(0) },
@@ -113,7 +120,8 @@ public class BillPanel extends JPanel{
 	      return columnNames.length;
 	    }
 	    
-	    public Class getColumnClass(int c) {
+	    @SuppressWarnings({ "unchecked", "rawtypes" })
+		public Class getColumnClass(int c) {
 	        return getValueAt(0, c).getClass();
 	    }
 	    
@@ -130,7 +138,7 @@ public class BillPanel extends JPanel{
 	    }
 
 		public boolean isCellEditable(int row, int col) {
-			if (col < 1){
+			if (col < 1 || col==6){
 				return false;
 			}
 			else if (row > 3){
@@ -227,11 +235,16 @@ public class BillPanel extends JPanel{
         table.getColumnModel().getColumn(5).setPreferredWidth(30);
         table.getColumnModel().getColumn(6).setPreferredWidth(15);
         table.getColumnModel().getColumn(7).setPreferredWidth(60);
+        table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
         
-        table.setRowHeight(35);
+        table.setRowHeight(30);
         
     }
+	
+	private void clearAll() {
+		//TODO
+	}
 	
 	public BillPanel() {
 		
@@ -241,21 +254,35 @@ public class BillPanel extends JPanel{
 		sellerAddressTextArea = new JEditorPane("text/html", "");
 		sellerAddressTextArea.setEditable(false);
 		String sellerAddress = "&nbsp;<b>"+ProjectConstants.sellerName+"</b>" + "<br>&nbsp;"+ProjectConstants.sellerAddressLine1 + 
-							   "<br>&nbsp;"+ProjectConstants.sellerAddressLine2 + "<br>&nbsp;"+ProjectConstants.sellerAddressLine3 +
+							   "&nbsp;"+ProjectConstants.sellerAddressLine2 + "<br>&nbsp;"+ProjectConstants.sellerAddressLine3 +
 							   "<br>&nbsp;"+ProjectConstants.sellerEmail;
 		sellerAddressTextArea.setText(sellerAddress);
 		sellerAddressTextArea.setBorder(BorderFactory.createLineBorder(null, 1));
 		
-		
 		buyerAddressTextArea = new JTextArea();
+		buyerAddressTextArea.setLineWrap(true);
 		buyerAddressTextArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.buyerAddressHeading, 0, 0));
+		buyerAddressTextArea.setFont(new Font("Verdana", Font.PLAIN, 16));
 		
 		invoiceNumTextField = new JTextField();
 		invoiceNumTextField.setColumns(10);
+		invoiceNumTextField.setText(ProjectConstants.nkcSupply);
+		invoiceNumTextField.setHorizontalAlignment(JTextField.CENTER);
 		invoiceNumTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.invoiceNoHeading, 0, 0));
+		invoiceNumTextField.setFont(new Font("Verdana", Font.PLAIN, 16));
+		invoiceNumTextField.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        if (invoiceNumTextField.getText().length() >= 16 )
+		            e.consume(); 
+		    }  
+		});
 		
 		datedTextField = new JTextField();
 		datedTextField.setColumns(10);
+		datedTextField.setFont(new Font("Verdana", Font.PLAIN, 16));
+		DateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy");
+		datedTextField.setHorizontalAlignment(JTextField.CENTER);
+		datedTextField.setText(dateFormatter.format(new Date()));
 		datedTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.datedHeading, 0, 0));
 		
 		deliverNoteTextField = new JTextField();
@@ -282,10 +309,6 @@ public class BillPanel extends JPanel{
 		destinationTextField = new JTextField();
 		destinationTextField.setColumns(10);
 		destinationTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.destinationHeading, 0, 0));
-		
-		notInuseTextArea = new JTextArea();
-		notInuseTextArea.setEditable(false);
-		notInuseTextArea.setBorder(BorderFactory.createLineBorder(null, 1));
 
 		billTable = new JTable(new BillTableModel());
 		billTableAlignCellAndRow(billTable);
@@ -295,21 +318,6 @@ public class BillPanel extends JPanel{
 		breakUpTableAlignCellAndRow(breakUpTable);
 		totalTableScrollPane = new JScrollPane(breakUpTable);
 		
-		JButton btnPdf = new JButton("PDF");
-		btnPdf.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Rukk ja bhai");
-				ControllerParams paramObj = new ControllerParams();
-				BillHeaderInputParams obj = paramObj.new BillHeaderInputParams();
-				obj.setInvoiceNumber(invoiceNumTextField.getText());
-				obj.deliveryNote = deliverNoteTextField.getText();
-				obj.despatchDocumentNo = despatchDocumentNoTextField.getText();
-				obj.deliveryNoteDate = deliveryNoteDateTextField.getText();
-				obj.despatchedThrough = despatchedThroughTextField.getText();
-				obj.destination = destinationTextField.getText();
-			}
-		});
-		
 		companyDetailsTextArea = new JEditorPane("text/html", "");
 		companyDetailsTextArea.setEditable(false);
 		String compDetails = "&nbsp;"+ProjectConstants.companyBankDetails + "<br>&nbsp;"+ProjectConstants.bankName + 
@@ -318,106 +326,158 @@ public class BillPanel extends JPanel{
 		companyDetailsTextArea.setBorder(BorderFactory.createLineBorder(null, 1));
 		
 		panDeclerationTextArea = new JEditorPane("text/html", "");
-		String pandecleration = "&nbsp;"+ProjectConstants.companyPan + "<br>&nbsp;<U>"+ProjectConstants.decleration + 
-				   "<br></U>&nbsp;"+ProjectConstants.declerationLine1 + "<br>&nbsp;"+ProjectConstants.declerationLine2;
+		String pandecleration = "&nbsp;"+ProjectConstants.companyPan+ProjectConstants.companyPanNumber + "<br>&nbsp;<U>"+ProjectConstants.decleration + 
+				   "<br></U>&nbsp;"+ProjectConstants.declerationLine1 + "<br>&nbsp;"+ProjectConstants.declerationLine2+ "&nbsp;"+ProjectConstants.declerationLine3;
 		panDeclerationTextArea.setText(pandecleration);
 		panDeclerationTextArea.setEditable(false);
 		panDeclerationTextArea.setBorder(BorderFactory.createLineBorder(null, 1));
 		
+		btnPdf_1 = new JButton("PDF");
+		btnPdf_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Set the header of bill
+				ControllerParams paramObj = new ControllerParams();
+				BillHeaderInputParams billHeaderObj = paramObj.new BillHeaderInputParams();
+				billHeaderObj.buyerDetails = buyerAddressTextArea.getText();
+				billHeaderObj.date = datedTextField.getText();
+				billHeaderObj.invoiceNumber = invoiceNumTextField.getText();
+				billHeaderObj.deliveryNote = deliverNoteTextField.getText();
+				billHeaderObj.despatchDocumentNo = despatchDocumentNoTextField.getText();
+				billHeaderObj.deliveryNoteDate = deliveryNoteDateTextField.getText();
+				billHeaderObj.despatchedThrough = despatchedThroughTextField.getText();
+				billHeaderObj.destination = destinationTextField.getText();
+				paramObj.BillHeaderInputParamsObj = billHeaderObj;
+				
+				// Set the table of bill
+				//TODO
+				
+				TableModel billTableModel = billTable.getModel();
+				double totalQuantity = (double) billTableModel.getValueAt(8, 4);
+				double bardana = (double) billTableModel.getValueAt(4, 7);
+				double majdoori = (double) billTableModel.getValueAt(5, 7);
+				double cgst = (double) billTableModel.getValueAt(6, 7);
+				double sgst = (double) billTableModel.getValueAt(7, 7);
+				double totalAmountWithGST = (double) billTableModel.getValueAt(8, 7);
+				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, 0, cgst, sgst, 0, totalAmountWithGST);
+				for (int i = 0; i < ProjectConstants.maxItems; i++) {
+					String itemDesc = (String) billTableModel.getValueAt(i, 1);
+					double gstRate = (double) billTableModel.getValueAt(i, 3);
+					double quanity = (double) billTableModel.getValueAt(i, 4);
+					double rate = (double) billTableModel.getValueAt(i, 5);
+					double amount = (double) billTableModel.getValueAt(i, 7);
+					if(itemDesc!=null && itemDesc.trim()!=""){
+						Good good = paramObj.new Good(i+1,itemDesc,gstRate, quanity, rate,amount);
+						allGoods.addGoodInList(good);
+					}
+				}
+				paramObj.AllGoodsObj = allGoods;
+				
+				InvoicePrinter.GeneratePdf(paramObj);
+				
+				
+				
+			}
+		});
+		
+		btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearAll();
+			}
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(377)
-					.addComponent(btnPdf)
-					.addContainerGap(401, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(buyerAddressTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(sellerAddressTextArea, GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(despatchedThroughTextField, GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+						.addComponent(invoiceNumTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+						.addComponent(deliverNoteTextField, 263, 263, Short.MAX_VALUE)
+						.addComponent(despatchDocumentNoTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(351)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(notInUseTextField, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(deliveryNoteDateTextField, Alignment.LEADING)
+									.addComponent(datedTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(35)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(billTableScrollPane, GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(buyerAddressTextArea)
-										.addComponent(sellerAddressTextArea, GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(despatchDocumentNoTextField, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-												.addComponent(deliverNoteTextField, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-												.addGroup(groupLayout.createSequentialGroup()
-													.addComponent(despatchedThroughTextField, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)
-													.addPreferredGap(ComponentPlacement.RELATED))
-												.addComponent(invoiceNumTextField, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-													.addComponent(destinationTextField, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-													.addGroup(groupLayout.createSequentialGroup()
-														.addPreferredGap(ComponentPlacement.RELATED)
-														.addComponent(datedTextField, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE))
-													.addComponent(deliveryNoteDateTextField, GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
-												.addGroup(groupLayout.createSequentialGroup()
-													.addGap(2)
-													.addComponent(notInUseTextField, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE))))
-										.addComponent(notInuseTextArea, GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)))
-								.addComponent(totalTableScrollPane, GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(panDeclerationTextArea, GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.UNRELATED)
-									.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, 387, GroupLayout.PREFERRED_SIZE)))))
+							.addGap(13)
+							.addComponent(destinationTextField, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)))
 					.addGap(41))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(347)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(396, Short.MAX_VALUE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(panDeclerationTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnPdf_1)
+								.addComponent(btnReset)))
+						.addComponent(totalTableScrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+						.addComponent(billTableScrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE))
+					.addGap(20))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
 					.addComponent(lblNewLabel)
-					.addGap(24)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(sellerAddressTextArea, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(buyerAddressTextArea, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(datedTextField, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)
-								.addComponent(invoiceNumTextField, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(deliverNoteTextField, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-								.addComponent(notInUseTextField, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-							.addGap(9)
-							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(despatchDocumentNoTextField, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-								.addComponent(deliveryNoteDateTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(invoiceNumTextField, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(datedTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(despatchedThroughTextField, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
-								.addComponent(destinationTextField, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+								.addComponent(deliverNoteTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(notInUseTextField, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(notInuseTextArea, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(despatchDocumentNoTextField, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+								.addComponent(deliveryNoteDateTextField, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(despatchedThroughTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(destinationTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(sellerAddressTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(buyerAddressTextArea, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(billTableScrollPane, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(billTableScrollPane, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+					.addGap(1)
 					.addComponent(totalTableScrollPane, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, 63, Short.MAX_VALUE)
-						.addComponent(panDeclerationTextArea, GroupLayout.PREFERRED_SIZE, 63, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnPdf)
-					.addContainerGap())
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(btnPdf_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnReset))
+						.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panDeclerationTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(191, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
 	}
 	
 	Image image = (new ImageIcon(ProjectConstants.backgroundImage)).getImage();
+	private JButton btnPdf_1;
+	private JButton btnReset;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
