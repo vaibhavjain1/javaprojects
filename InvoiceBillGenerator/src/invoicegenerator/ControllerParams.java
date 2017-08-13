@@ -59,18 +59,20 @@ public class ControllerParams{
 		double igst;
 		double cgst;
 		double sgst;
+		double roundOff;
 		double totalAmountInNumber;
 		double totalAmountWithGST;
 		List<Good> goodsList;
 		
 		public AllGoods(double totalQuantity, double bardana, double majdoori, double igst, double cgst,
-				double sgst, double totalAmountInNumber, double totalAmountWithGST) {
+				double sgst, double roundOff, double totalAmountInNumber, double totalAmountWithGST) {
 			this.totalQuantity = totalQuantity;
 			this.bardana = bardana;
 			this.majdoori = majdoori;
 			this.igst = igst;
 			this.cgst = cgst;
 			this.sgst = sgst;
+			this.roundOff = roundOff;
 			this.totalAmountInNumber = totalAmountInNumber;
 			this.totalAmountWithGST = totalAmountWithGST;
 			goodsList = new ArrayList<>();

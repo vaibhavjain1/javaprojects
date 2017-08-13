@@ -34,16 +34,18 @@ import invoicegenerator.ControllerParams.AllGoods;
 import invoicegenerator.ControllerParams.BillHeaderInputParams;
 import invoicegenerator.ControllerParams.Good;
 import invoicegenerator.InvoicePrinter;
+import javax.swing.JCheckBox;
 
 class BreakUpTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	private String breakUpTableColumnNames[] = { ProjectConstants.hsnSacHeading, ProjectConstants.taxableHeading+ProjectConstants.valueHeading,
-			"C.T. " + ProjectConstants.rate, "C.T. " + ProjectConstants.amount, "S.T. " + ProjectConstants.rate, "S.T. " + ProjectConstants.amount };
+			"C.T. " + ProjectConstants.rate, "C.T. " + ProjectConstants.amount, "S.T. " + ProjectConstants.rate, "S.T. " + ProjectConstants.amount
+			, "I.T. " + ProjectConstants.rate, "I.T. " + ProjectConstants.amount};
 	
 	private Object[][] totalData = {
-			{ "0908", new Double(0), new Double(2.50), new Double(0), new Double(2.50), new Double(0)},
-			{ ProjectConstants.total, new Double(0), "", new Double(0), "", new Double(0)} 
+			{ "0908", new Double(0), new Double(2.50), new Double(0), new Double(2.50), new Double(0), new Double(5.0), new Double(0)},
+			{ ProjectConstants.total, new Double(0), "", new Double(0), "", new Double(0), "", new Double(0)} 
 	};
 	
 	@Override
@@ -85,7 +87,6 @@ public class BillPanel extends JPanel{
 	private JTextField invoiceNumTextField;
 	private JTextField datedTextField;
 	private JTextField deliverNoteTextField;
-	private JTextField notInUseTextField;
 	private JTextField despatchDocumentNoTextField;
 	private JTextField deliveryNoteDateTextField;
 	private JTextField despatchedThroughTextField;
@@ -96,6 +97,8 @@ public class BillPanel extends JPanel{
 	private JScrollPane totalTableScrollPane;
 	private JEditorPane companyDetailsTextArea;
 	private JEditorPane panDeclerationTextArea;
+	private JCheckBox icsGstCheckBox;
+	public boolean iGSTEnabled = false;
 	
 	class BillTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = 1L;
@@ -113,6 +116,8 @@ public class BillPanel extends JPanel{
 				{ null, ProjectConstants.majdoori, null, null, null, null, null, new Double(0) },
 				{ null, ProjectConstants.outputCGST, null, null, null, null, null, new Double(0) },
 				{ null, ProjectConstants.outputSGST, null, null, null, null, null, new Double(0) },
+				{ null, ProjectConstants.outputIGST, null, null, null, null, null, new Double(0) },
+				{ null, ProjectConstants.roundOff, null, null, null, null, null, new Double(0) },
 				{ null, ProjectConstants.total, null, null, new Double(0), null, null, new Double(0) }, 
 		};
 
@@ -141,11 +146,11 @@ public class BillPanel extends JPanel{
 			if (col < 1 || col==6){
 				return false;
 			}
-			else if (row > 3){
-				if(col>6)
-					return true;
-				else 
-					return false;
+			if(row > 3 && col < 7){
+				return false;
+			}
+			if(row > 5 && row != 9 && col == 7){
+				return false;
 			}
 			else {
 				return true;
@@ -156,7 +161,7 @@ public class BillPanel extends JPanel{
 			billData[row][col] = value;
 			fireTableCellUpdated(row, col);
 			// if quantity || quantity is updated
-			if (col == 4 || col == 5 || row == 4 || row == 5) {
+			if (col == 4 || col == 5 || row == 4 || row == 5 || row == 6 || row == 7 || row == 8 || row ==9) {
 				//update individual amount
 				for(int i = 0; i < 4 ; i++){
 					billData[i][7] = Double.parseDouble(billData[i][4].toString()) * Double.parseDouble(billData[i][5].toString());
@@ -164,31 +169,41 @@ public class BillPanel extends JPanel{
 				}
 				
 				//update total quantity
-				billData[8][4] = 0.0;
+				billData[10][4] = 0.0;
 				for (int i = 0; i < 4; i++) {
-					billData[8][4] = Double.parseDouble(billData[8][4].toString()) + Double.parseDouble(billData[i][4].toString());
+					billData[10][4] = Double.parseDouble(billData[10][4].toString()) + Double.parseDouble(billData[i][4].toString());
 				}
-				fireTableCellUpdated(8, 4);
+				fireTableCellUpdated(9, 4);
 				
-				//update CGST and SGST
-				billData[6][7] = 0.0;
-				billData[7][7] = 0.0;
+				//update IGST, CGST and SGST
 				double sum = 0.0;
-				for (int i = 0; i < 6; i++) {
-					sum += Double.parseDouble(billData[i][7].toString());
+				if(iGSTEnabled){
+					billData[8][7] = 0.0;
+					
+					for (int i = 0; i < 6; i++) {
+						sum += Double.parseDouble(billData[i][7].toString());
+					}
+					billData[8][7] = (sum * 5.0)/100;
+					fireTableCellUpdated(8, 7);
+				}else{
+					billData[6][7] = 0.0;
+					billData[7][7] = 0.0;
+					for (int i = 0; i < 6; i++) {
+						sum += Double.parseDouble(billData[i][7].toString());
+					}
+					billData[6][7] = (sum * 2.5)/100;
+					billData[7][7] = (sum * 2.5)/100;
+					fireTableCellUpdated(6, 7);
+					fireTableCellUpdated(7, 7);
 				}
-				billData[6][7] = (sum * 2.5)/100;
-				billData[7][7] = (sum * 2.5)/100;
-				fireTableCellUpdated(6, 7);
-				fireTableCellUpdated(7, 7);
 				
 				//update total amount
 				double totalSum = 0.0;
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 10; i++) {
 					totalSum += Double.parseDouble(billData[i][7].toString());
 				}
-				billData[8][7] = totalSum;
-				fireTableCellUpdated(8, 7);
+				billData[10][7] = totalSum;
+				fireTableCellUpdated(10, 7);
 				
 				TableModel breakUpTableModel  = breakUpTable.getModel();
 				breakUpTableModel.setValueAt(sum, 0, 1);
@@ -197,6 +212,8 @@ public class BillPanel extends JPanel{
 				breakUpTableModel.setValueAt(billData[6][7], 1, 3);
 				breakUpTableModel.setValueAt(billData[7][7], 0, 5);
 				breakUpTableModel.setValueAt(billData[7][7], 1, 5);
+				breakUpTableModel.setValueAt(billData[8][7], 0, 7);
+				breakUpTableModel.setValueAt(billData[8][7], 1, 7);
 			}
 		}
 
@@ -210,7 +227,8 @@ public class BillPanel extends JPanel{
         table.getColumnModel().getColumn(3).setPreferredWidth(30);
         table.getColumnModel().getColumn(4).setPreferredWidth(20);
         table.getColumnModel().getColumn(5).setPreferredWidth(30);
-        
+        table.getColumnModel().getColumn(6).setPreferredWidth(20);
+        table.getColumnModel().getColumn(7).setPreferredWidth(30);
         table.setRowHeight(25);
     }
 	
@@ -238,7 +256,7 @@ public class BillPanel extends JPanel{
         table.setFont(new Font("SansSerif", Font.PLAIN, 14));
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
         
-        table.setRowHeight(30);
+        table.setRowHeight(24);
         
     }
 	
@@ -289,11 +307,6 @@ public class BillPanel extends JPanel{
 		deliverNoteTextField.setColumns(10);
 		deliverNoteTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.deliveryNoteHeading, 0, 0));
 		
-		notInUseTextField = new JTextField();
-		notInUseTextField.setColumns(10);
-		notInUseTextField.setEditable(false);
-		notInUseTextField.setBorder(BorderFactory.createLineBorder(null, 1));
-		
 		despatchDocumentNoTextField = new JTextField();
 		despatchDocumentNoTextField.setColumns(10);
 		despatchDocumentNoTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.despatchDocumentNo, 0, 0));
@@ -332,8 +345,8 @@ public class BillPanel extends JPanel{
 		panDeclerationTextArea.setEditable(false);
 		panDeclerationTextArea.setBorder(BorderFactory.createLineBorder(null, 1));
 		
-		btnPdf_1 = new JButton("PDF");
-		btnPdf_1.addActionListener(new ActionListener() {
+		generatePdfButton = new JButton("PDF");
+		generatePdfButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Set the header of bill
 				ControllerParams paramObj = new ControllerParams();
@@ -347,48 +360,63 @@ public class BillPanel extends JPanel{
 				billHeaderObj.despatchedThrough = despatchedThroughTextField.getText();
 				billHeaderObj.destination = destinationTextField.getText();
 				paramObj.BillHeaderInputParamsObj = billHeaderObj;
-				
-				// Set the table of bill
-				//TODO
-				
+
 				TableModel billTableModel = billTable.getModel();
-				double totalQuantity = (double) billTableModel.getValueAt(8, 4);
+				double totalQuantity = (double) billTableModel.getValueAt(10, 4);
 				double bardana = (double) billTableModel.getValueAt(4, 7);
 				double majdoori = (double) billTableModel.getValueAt(5, 7);
 				double cgst = (double) billTableModel.getValueAt(6, 7);
 				double sgst = (double) billTableModel.getValueAt(7, 7);
-				double totalAmountWithGST = (double) billTableModel.getValueAt(8, 7);
-				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, 0, cgst, sgst, 0, totalAmountWithGST);
+				double roundOff = (double) billTableModel.getValueAt(8, 7);
+				double totalAmountWithGST = (double) billTableModel.getValueAt(10, 7);
+				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, 0, cgst, sgst, roundOff, 0,	totalAmountWithGST);
 				for (int i = 0; i < ProjectConstants.maxItems; i++) {
 					String itemDesc = (String) billTableModel.getValueAt(i, 1);
 					double gstRate = (double) billTableModel.getValueAt(i, 3);
 					double quanity = (double) billTableModel.getValueAt(i, 4);
 					double rate = (double) billTableModel.getValueAt(i, 5);
 					double amount = (double) billTableModel.getValueAt(i, 7);
-					if(itemDesc!=null && itemDesc.trim()!=""){
-						Good good = paramObj.new Good(i+1,itemDesc,gstRate, quanity, rate,amount);
+					if (itemDesc != null && itemDesc.trim() != "") {
+						Good good = paramObj.new Good(i + 1, itemDesc, gstRate, quanity, rate, amount);
 						allGoods.addGoodInList(good);
 					}
 				}
 				paramObj.AllGoodsObj = allGoods;
-				
-				InvoicePrinter.GeneratePdf(paramObj);
-				
-				
-				
+
+				new InvoicePrinter().GeneratePdf(paramObj);
+
 			}
 		});
 		
-		btnReset = new JButton("Reset");
-		btnReset.addActionListener(new ActionListener() {
+		resetButtin = new JButton("Reset");
+		resetButtin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				clearAll();
 			}
 		});
 		
+		icsGstCheckBox = new JCheckBox("IGST");
+		icsGstCheckBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(icsGstCheckBox.isSelected()){
+					iGSTEnabled = true;
+					TableModel billTableModel = billTable.getModel();
+					billTableModel.setValueAt(0.0, 6, 7);
+					billTableModel.setValueAt(0.0, 7, 7);
+				}
+				else{
+					iGSTEnabled = false;
+					TableModel billTableModel = billTable.getModel();
+					billTableModel.setValueAt(0.0, 8, 7);
+				}
+			}
+		});
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -403,14 +431,15 @@ public class BillPanel extends JPanel{
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(notInUseTextField, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
-								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-									.addComponent(deliveryNoteDateTextField, Alignment.LEADING)
-									.addComponent(datedTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(deliveryNoteDateTextField, Alignment.LEADING)
+								.addComponent(datedTextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(13)
-							.addComponent(destinationTextField, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(destinationTextField, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(icsGstCheckBox)))
 					.addGap(41))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(347)
@@ -418,18 +447,22 @@ public class BillPanel extends JPanel{
 					.addContainerGap(396, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(panDeclerationTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnPdf_1)
-								.addComponent(btnReset)))
-						.addComponent(totalTableScrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
-						.addComponent(billTableScrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE))
+					.addComponent(billTableScrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
 					.addGap(20))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(totalTableScrollPane, GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+					.addGap(20))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panDeclerationTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(generatePdfButton)
+						.addComponent(resetButtin))
+					.addContainerGap(52, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -442,9 +475,9 @@ public class BillPanel extends JPanel{
 								.addComponent(invoiceNumTextField, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 								.addComponent(datedTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(deliverNoteTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(notInUseTextField, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+								.addComponent(icsGstCheckBox))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(despatchDocumentNoTextField, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
@@ -458,26 +491,26 @@ public class BillPanel extends JPanel{
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(buyerAddressTextArea, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(billTableScrollPane, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+					.addComponent(billTableScrollPane, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)
 					.addGap(1)
 					.addComponent(totalTableScrollPane, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnPdf_1)
+							.addComponent(generatePdfButton)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnReset))
+							.addComponent(resetButtin))
 						.addComponent(companyDetailsTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(panDeclerationTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(191, Short.MAX_VALUE))
+					.addContainerGap(197, Short.MAX_VALUE))
 		);
 		setLayout(groupLayout);
 		
 	}
 	
 	Image image = (new ImageIcon(ProjectConstants.backgroundImage)).getImage();
-	private JButton btnPdf_1;
-	private JButton btnReset;
+	private JButton generatePdfButton;
+	private JButton resetButtin;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

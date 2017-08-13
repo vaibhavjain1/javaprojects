@@ -3,11 +3,9 @@ package invoicegenerator;
 import static utilities.InvoiceUtil.logger;
 
 import java.awt.Desktop;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.Date;
 
 import com.itextpdf.text.Document;
@@ -15,6 +13,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSmartCopy;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -28,6 +27,7 @@ public class InvoicePrinter {
 
 	private BaseFont bfBold;
 	private BaseFont bf;
+	private static String copyHeading = "";
 
 	public static void main(String[] args) {
 		ControllerParams controlParam = new ControllerParams();
@@ -41,16 +41,28 @@ public class InvoicePrinter {
 		billHeaderObj.despatchedThrough = "---add despatched---";
 		billHeaderObj.destination = "---add destination---";
 		controlParam.BillHeaderInputParamsObj = billHeaderObj;
-		GeneratePdf(controlParam);
+		new InvoicePrinter().GeneratePdf(controlParam);
 	}
 
-	public static void GeneratePdf(ControllerParams billHeaderObj){
+	public void GeneratePdf(ControllerParams controlParamObj){
 		String pdfFilename = ProjectConstants.generatedPdfFolder+"Invoice"+new Date()+".pdf";
+		String pdfFilename_1 = ProjectConstants.generatedPdfFolder+"Invoice"+new Date()+"_1.pdf";
+		String pdfFilename_2 = ProjectConstants.generatedPdfFolder+"Invoice"+new Date()+"_2.pdf";
+		String pdfFilename_3 = ProjectConstants.generatedPdfFolder+"Invoice"+new Date()+"_3.pdf";
 		pdfFilename = pdfFilename.replaceAll(" ", "_").replaceAll(":", "-");
-		//pdfFilename = "C:/export.pdf";
+		pdfFilename_1 = pdfFilename_1.replaceAll(" ", "_").replaceAll(":", "-");
+		pdfFilename_2 = pdfFilename_2.replaceAll(" ", "_").replaceAll(":", "-");
+		pdfFilename_3 = pdfFilename_3.replaceAll(" ", "_").replaceAll(":", "-");
+		
 		logger.info("Creating Pdf");
 		InvoicePrinter generateInvoice = new InvoicePrinter();
-		generateInvoice.createPDF(pdfFilename, billHeaderObj);
+		copyHeading = ProjectConstants.forRecipientHeading;
+		generateInvoice.createPDF(pdfFilename_1, controlParamObj);
+		copyHeading = ProjectConstants.forTransporterHeading;
+		generateInvoice.createPDF(pdfFilename_2, controlParamObj);
+		copyHeading = ProjectConstants.forSupplierHeading;
+		generateInvoice.createPDF(pdfFilename_3, controlParamObj);
+		concatenatePdfs(new File(pdfFilename), pdfFilename_1, pdfFilename_2, pdfFilename_3);
 		try {
 			Desktop.getDesktop().open(new File(pdfFilename));
 		} catch (IOException e) {
@@ -58,17 +70,23 @@ public class InvoicePrinter {
 		}
 	}
 	
-	private void createCopy(){
-	/*	PdfReader reader = new PdfReader(buffer.toByteArray());
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Document doc = new Document();
-		PdfSmartCopy copy = new PdfSmartCopy(doc, baos);
-		doc.open();
-		for (int i = 0; i < x; i++) {
-		    copy.addDocument(reader);
+	public static void concatenatePdfs(File outputFile, String... listOfPdfFiles){
+		Document document = null;
+		try {
+			document = new Document();
+			FileOutputStream outputStream = new FileOutputStream(outputFile);
+			PdfCopy copy = new PdfSmartCopy(document, outputStream);
+			document.open();
+			for (String inFilePath : listOfPdfFiles) {
+			    PdfReader reader = new PdfReader(inFilePath);
+			    copy.addDocument(reader);
+			    reader.close();
+			}
+		} catch (DocumentException | IOException e) {
+			
+		} finally {
+			document.close();
 		}
-		doc.close();
-		reader.close();*/
 	}
 	
 	private void createPDF(String pdfFilename, ControllerParams controlParams){
@@ -140,6 +158,7 @@ public class InvoicePrinter {
 			createContent(cb, 405, 650, billHeaderObj.destination,PdfContentByte.ALIGN_LEFT);
 			
 			createHeadingsH1(cb, 238, 763, ProjectConstants.taxInvoiceHeading);
+			createContent(cb, 390, 763, copyHeading,PdfContentByte.ALIGN_LEFT);
 			createHeadingsH3(cb, 49, 740, ProjectConstants.sellerName);
 			createContent(cb, 49, 728, ProjectConstants.sellerAddressLine1,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 49, 716, ProjectConstants.sellerAddressLine2,PdfContentByte.ALIGN_LEFT);
@@ -237,6 +256,7 @@ public class InvoicePrinter {
 			createContent(cb, 48, 92, ProjectConstants.declerationLine1,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 48, 82, ProjectConstants.declerationLine2,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 48, 72, ProjectConstants.declerationLine3,PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 200, 50, ProjectConstants.compInvoice,PdfContentByte.ALIGN_LEFT);
 			cb.stroke();
 			
 		} catch (Exception ex) {
@@ -270,7 +290,7 @@ public class InvoicePrinter {
 		createContent(cb, 465, 438, String.valueOf(allGoodObj.majdoori),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 465, 426, String.valueOf(allGoodObj.cgst),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 465, 414, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
-		//createContent(cb, 465, 402, ProjectConstants.roundOff,PdfContentByte.ALIGN_LEFT);
+		createContent(cb, 465, 402, String.valueOf(allGoodObj.roundOff),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 465, 293, String.valueOf(allGoodObj.totalAmountWithGST),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 350, 293, String.valueOf(allGoodObj.totalQuantity),PdfContentByte.ALIGN_LEFT);
 	}

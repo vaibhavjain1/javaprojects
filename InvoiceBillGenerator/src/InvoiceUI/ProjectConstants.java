@@ -5,7 +5,11 @@ public class ProjectConstants {
 	public static final String ApplicationName = null;
 	public static String frameIcon;
 	
+	/* Heading */
 	public static String taxInvoiceHeading = "Tax Invoice";
+	public static String forRecipientHeading = "(ORIGINAL FOR RECIPIENT)";
+	public static String forTransporterHeading = "(DUPLICATE FOR TRANSPORTER)";
+	public static String forSupplierHeading = "(TRIPLICATE FOR SUPPLIER)";
 	public static String sellerName = "Naresh Kirana Company";
 	public static String sellerAddressLine1 = "19A GADODIA MARKET";
 	public static String sellerAddressLine2 = "KHARI BAOLI";
@@ -37,6 +41,7 @@ public class ProjectConstants {
 
 	public static String bardana = "BARDANA";
 	public static String majdoori = "MAJDOORI";
+	public static String outputIGST = "OUTPUT IGST";
 	public static String outputCGST = "OUTPUT CGST";
 	public static String outputSGST = "OUTPUT SGST";
 	public static String roundOff = "ROUND OFF";
