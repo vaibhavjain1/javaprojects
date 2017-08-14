@@ -5,48 +5,48 @@ public class NumberToWord
 {
    private static final String[] specialNames = {
        "",
-       " thousand",
-       " million",
-       " billion",
-       " trillion",
-       " quadrillion",
-       " quintillion"
+       " Thousand",
+       " Million",
+       " Billion",
+       " Trillion",
+       " Quadrillion",
+       " Quintillion"
    };
    
    private static final String[] tensNames = {
        "",
-       " ten",
-       " twenty",
-       " thirty",
-       " forty",
-       " fifty",
-       " sixty",
-       " seventy",
-       " eighty",
-       " ninety"
+       " Ten",
+       " Twenty",
+       " Thirty",
+       " Forty",
+       " Fifty",
+       " Sixty",
+       " Seventy",
+       " Eighty",
+       " Ninety"
    };
    
    private static final String[] numNames = {
        "",
-       " one",
-       " two",
-       " three",
-       " four",
-       " five",
-       " six",
-       " seven",
-       " eight",
-       " nine",
-       " ten",
-       " eleven",
-       " twelve",
-       " thirteen",
-       " fourteen",
-       " fifteen",
-       " sixteen",
-       " seventeen",
-       " eighteen",
-       " nineteen"
+       " One",
+       " Two",
+       " Three",
+       " Four",
+       " Five",
+       " Six",
+       " Seven",
+       " Eight",
+       " Nine",
+       " Ten",
+       " Eleven",
+       " Twelve",
+       " Thirteen",
+       " Fourteen",
+       " Fifteen",
+       " Sixteen",
+       " Seventeen",
+       " Eighteen",
+       " Nineteen"
    };
    
    private String convertLessThanOneThousand(int number) {
@@ -94,9 +94,30 @@ public class NumberToWord
        return (prefix + current).trim();
    }
    
+	public static String NumberToCurrency(double totalAmount) {
+		String amountInwords = "";
+
+		totalAmount = totalAmount * 100;
+		totalAmount = Math.round(totalAmount);
+		totalAmount = totalAmount / 100;
+
+		String totalAmountasString = String.valueOf(totalAmount);
+		int ruppess = Integer.parseInt(totalAmountasString.split("\\.")[0]);
+		int paise = Integer.parseInt(totalAmountasString.split("\\.")[1]);
+
+		NumberToWord obj = new NumberToWord();
+		amountInwords += "INR " + obj.convert(ruppess);
+		if (paise != 0) {
+			amountInwords += " and ";
+			amountInwords += obj.convert(paise);
+			amountInwords += " paise";
+		}
+		amountInwords += " only";
+		
+		return amountInwords;
+	}
+   
    public static void main(String[] args) {
-       NumberToWord obj = new NumberToWord();
-       System.out.println("*** " + obj.convert(123456789));
-       System.out.println("*** " + obj.convert(-55));
+       System.out.println(NumberToCurrency(12345.6789));
    }
 }

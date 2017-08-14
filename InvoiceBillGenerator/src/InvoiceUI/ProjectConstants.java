@@ -51,6 +51,7 @@ public class ProjectConstants {
 	
 	public static String taxableHeading = "Taxable";
 	public static String valueHeading = "Value";
+	public static String integratedTax = "Integrated Tax";
 	public static String centralTax = "Central Tax";
 	public static String stateTax = "State Tax";
 	public static String rate = "Rate";
@@ -71,5 +72,6 @@ public class ProjectConstants {
 	public static String forNareshComp = "for Naresh Kirana Company";
 	public static String authSign = "Authorised Signatory";
 	public static String compInvoice = "This is a Computer Generated Invoice";
+	
 	
 }

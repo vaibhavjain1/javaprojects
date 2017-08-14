@@ -8,8 +8,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
@@ -18,10 +21,12 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSmartCopy;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import InvoiceUI.BillPanel;
 import InvoiceUI.ProjectConstants;
 import invoicegenerator.ControllerParams.AllGoods;
 import invoicegenerator.ControllerParams.BillHeaderInputParams;
 import invoicegenerator.ControllerParams.Good;
+import utilities.NumberToWord;
 
 public class InvoicePrinter {
 
@@ -143,9 +148,9 @@ public class InvoicePrinter {
 
 			// Invoice Header box Text Headings
 			createContent(cb, 283, 745, ProjectConstants.invoiceNoHeading,PdfContentByte.ALIGN_LEFT);
-			createHeadingsH3(cb, 283, 730, billHeaderObj.invoiceNumber);
+			createHeadings(cb, 283, 730, billHeaderObj.invoiceNumber,11);
 			createContent(cb, 405, 745, ProjectConstants.datedHeading,PdfContentByte.ALIGN_LEFT);
-			createHeadingsH3(cb, 405, 730, billHeaderObj.date);
+			createHeadings(cb, 405, 730, billHeaderObj.date,11);
 			createContent(cb, 283, 719, ProjectConstants.deliveryNoteHeading,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 283, 704, billHeaderObj.deliveryNote,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 283, 690, ProjectConstants.despatchDocumentNo,PdfContentByte.ALIGN_LEFT);
@@ -157,9 +162,9 @@ public class InvoicePrinter {
 			createContent(cb, 405, 665, ProjectConstants.destinationHeading,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 405, 650, billHeaderObj.destination,PdfContentByte.ALIGN_LEFT);
 			
-			createHeadingsH1(cb, 238, 763, ProjectConstants.taxInvoiceHeading);
+			createHeadings(cb, 238, 763, ProjectConstants.taxInvoiceHeading,12);
 			createContent(cb, 390, 763, copyHeading,PdfContentByte.ALIGN_LEFT);
-			createHeadingsH3(cb, 49, 740, ProjectConstants.sellerName);
+			createHeadings(cb, 49, 740, ProjectConstants.sellerName,11);
 			createContent(cb, 49, 728, ProjectConstants.sellerAddressLine1,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 49, 716, ProjectConstants.sellerAddressLine2,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 49, 702, ProjectConstants.sellerAddressLine3,PdfContentByte.ALIGN_LEFT);
@@ -207,14 +212,18 @@ public class InvoicePrinter {
 			
 			createContent(cb, 172, 450, ProjectConstants.bardana,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 168, 438, ProjectConstants.majdoori,PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 150, 426, ProjectConstants.outputCGST,PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 150, 414, ProjectConstants.outputSGST,PdfContentByte.ALIGN_LEFT);
+			if(BillPanel.iGSTEnabled){
+				createContent(cb, 155, 426, ProjectConstants.outputIGST,PdfContentByte.ALIGN_LEFT);
+			} else {
+				createContent(cb, 150, 426, ProjectConstants.outputCGST,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 150, 414, ProjectConstants.outputSGST,PdfContentByte.ALIGN_LEFT);
+			}
 			createContent(cb, 161, 402, ProjectConstants.roundOff,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 200, 293, ProjectConstants.total,PdfContentByte.ALIGN_LEFT);
 			
 			// Invoice footer box
 			cb.rectangle(45, 70, 475, 215);
-			// Horizontal line
+			// Break up table Horizontal line
 			cb.moveTo(45, 250);
 			cb.lineTo(520, 250);
 			cb.moveTo(45, 225);
@@ -223,40 +232,71 @@ public class InvoicePrinter {
 			cb.lineTo(520, 210);
 			cb.moveTo(45, 195);
 			cb.lineTo(520, 195);
-			// Vertical lines
-			cb.moveTo(260, 195);
-			cb.lineTo(260, 250);
+			cb.moveTo(330, 238);
+			cb.lineTo(520, 238);
+			// Break up table Vertical lines
+			cb.moveTo(265, 195);
+			cb.lineTo(265, 250);
 			cb.moveTo(330, 195);
 			cb.lineTo(330, 250);
-			cb.moveTo(420, 195);
-			cb.lineTo(420, 250);
+			
+			
 			// Signature box
 			cb.moveTo(280, 120);
 			cb.lineTo(520, 120);
 			cb.moveTo(280, 120);
 			cb.lineTo(280, 70);
 			
+			if(BillPanel.iGSTEnabled){
+				createContent(cb, 390, 242, ProjectConstants.integratedTax,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 350, 230, ProjectConstants.rate,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 440, 230, ProjectConstants.amount,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 350, 215, "5%",PdfContentByte.ALIGN_LEFT);
+				//vertical
+				cb.moveTo(420, 195);
+				cb.lineTo(420, 238);
+			} else {
+				createContent(cb, 350, 242, ProjectConstants.centralTax,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 450, 242, ProjectConstants.stateTax,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 340, 230, ProjectConstants.rate,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 380, 230, ProjectConstants.amount,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 430, 230, ProjectConstants.rate,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 480, 230, ProjectConstants.amount,PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 340, 215, "2.50%",PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 430, 215, "2.50%",PdfContentByte.ALIGN_LEFT);
+				//vertical
+				cb.moveTo(375, 195);
+				cb.lineTo(375, 238);
+				cb.moveTo(420, 195);
+				cb.lineTo(420, 250);
+				cb.moveTo(470, 195);
+				cb.lineTo(470, 238);
+			}
+			
+			
 			createContent(cb, 48, 274, ProjectConstants.amountChargableInwords,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 480, 274, ProjectConstants.eoe,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 140, 240, ProjectConstants.hsnSacHeading,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 280, 240, ProjectConstants.taxableHeading,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 285, 230, ProjectConstants.valueHeading,PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 48, 215, "0908",PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 240, 200, ProjectConstants.total,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 48, 180, ProjectConstants.taxAmountInwords,PdfContentByte.ALIGN_LEFT);
 			
 			createContent(cb, 280, 160, ProjectConstants.companyBankDetails,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 280, 148, ProjectConstants.bankName,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 280, 134, ProjectConstants.bankAcNo,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 280, 122, ProjectConstants.branchIfscCode,PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 390, 110, ProjectConstants.forNareshComp,PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 420, 73, ProjectConstants.authSign,PdfContentByte.ALIGN_LEFT);
+			createHeadings(cb, 409, 113, ProjectConstants.forNareshComp,8);
+			createContent(cb, 432, 73, ProjectConstants.authSign,PdfContentByte.ALIGN_LEFT);
 			
 			createContent(cb, 48, 115, ProjectConstants.companyPan,PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 150, 115, ProjectConstants.companyPanNumber,PdfContentByte.ALIGN_LEFT);
+			createHeadings(cb, 150, 115, ProjectConstants.companyPanNumber,9);
 			createContent(cb, 48, 102, ProjectConstants.decleration,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 48, 92, ProjectConstants.declerationLine1,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 48, 82, ProjectConstants.declerationLine2,PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 48, 72, ProjectConstants.declerationLine3,PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 200, 50, ProjectConstants.compInvoice,PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 200, 57, ProjectConstants.compInvoice,PdfContentByte.ALIGN_LEFT);
 			cb.stroke();
 			
 		} catch (Exception ex) {
@@ -288,24 +328,35 @@ public class InvoicePrinter {
 		}
 		createContent(cb, 465, 450, String.valueOf(allGoodObj.bardana),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 465, 438, String.valueOf(allGoodObj.majdoori),PdfContentByte.ALIGN_LEFT);
-		createContent(cb, 465, 426, String.valueOf(allGoodObj.cgst),PdfContentByte.ALIGN_LEFT);
-		createContent(cb, 465, 414, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+		if(BillPanel.iGSTEnabled){
+			createContent(cb, 465, 426, String.valueOf(allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 440, 215, String.valueOf(allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 440, 200, String.valueOf(allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 290, 215, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 290, 200, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 160, 180, NumberToWord.NumberToCurrency(allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
+		}else{
+			createContent(cb, 465, 426, String.valueOf(allGoodObj.cgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 465, 414, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 380, 215, String.valueOf(allGoodObj.cgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 380, 200, String.valueOf(allGoodObj.cgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 480, 215, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 480, 200, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 290, 215, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.cgst-allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 290, 200, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.cgst-allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 160, 180, NumberToWord.NumberToCurrency(allGoodObj.cgst+allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+		}
 		createContent(cb, 465, 402, String.valueOf(allGoodObj.roundOff),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 465, 293, String.valueOf(allGoodObj.totalAmountWithGST),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 350, 293, String.valueOf(allGoodObj.totalQuantity),PdfContentByte.ALIGN_LEFT);
+		
+		createContent(cb, 48, 260, NumberToWord.NumberToCurrency(allGoodObj.totalAmountWithGST),PdfContentByte.ALIGN_LEFT);
+		
 	}
 
-	private void createHeadingsH1(PdfContentByte cb, float x, float y, String text) {
+	private void createHeadings(PdfContentByte cb, float x, float y, String text, int size) {
 		cb.beginText();
-		cb.setFontAndSize(bfBold, 12);
-		cb.setTextMatrix(x, y);
-		cb.showText(text.trim());
-		cb.endText();
-	}
-
-	private void createHeadingsH3(PdfContentByte cb, float x, float y, String text) {
-		cb.beginText();
-		cb.setFontAndSize(bfBold, 11);
+		cb.setFontAndSize(bfBold, size);
 		cb.setTextMatrix(x, y);
 		cb.showText(text.trim());
 		cb.endText();
@@ -313,24 +364,33 @@ public class InvoicePrinter {
 
 	private void createContent(PdfContentByte cb, float x, float y, String text, int align) {
 		cb.beginText();
-		cb.setFontAndSize(bf, 10);
+		cb.setFontAndSize(bf, 9);
 		cb.showTextAligned(align, text.trim(), x, y, 0);
 		cb.endText();
 	}
 	
-	private void createText(PdfContentByte cb, float x, float y, String text, boolean bold, boolean italics, int align) {
+	private void createText(PdfContentByte cb, float x, float y, String text, boolean bold, boolean italics, boolean underline, int align) {
+		//Font SUBFONT = new Font(Font.getFamily("TIMES_ROMAN"), 12,Font.UNDERLINE);
+		//Font SUBFONT = new Font();
+		Font SUBFONT = FontFactory.getFont(null,
+			    BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 0.8f, Font.NORMAL, BaseColor.BLACK);
+			BaseFont baseFont = SUBFONT.getBaseFont();
 		try {
 			BaseFont currBf = bf;
 			if(bold && italics){
-				currBf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+				
 			} else if(bold) {
 				
+				currBf = BaseFont.createFont(BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 			} else if(italics) {
-				
+				currBf = BaseFont.createFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
+			} else if(underline) {
+				currBf = BaseFont.createFont(BaseFont.TIMES_ITALIC, BaseFont.CP1252, BaseFont.NOT_EMBEDDED);
 			}
 			
+			
 			cb.beginText();
-			cb.setFontAndSize(bf, 10);
+			cb.setFontAndSize(baseFont, 12);
 			cb.showTextAligned(align, text.trim(), x, y, 0);
 			cb.endText();
 		} catch (Exception e) {

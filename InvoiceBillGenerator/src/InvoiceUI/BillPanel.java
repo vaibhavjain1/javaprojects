@@ -98,7 +98,7 @@ public class BillPanel extends JPanel{
 	private JEditorPane companyDetailsTextArea;
 	private JEditorPane panDeclerationTextArea;
 	private JCheckBox icsGstCheckBox;
-	public boolean iGSTEnabled = false;
+	public static boolean iGSTEnabled = false;
 	
 	class BillTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = 1L;
@@ -367,9 +367,10 @@ public class BillPanel extends JPanel{
 				double majdoori = (double) billTableModel.getValueAt(5, 7);
 				double cgst = (double) billTableModel.getValueAt(6, 7);
 				double sgst = (double) billTableModel.getValueAt(7, 7);
-				double roundOff = (double) billTableModel.getValueAt(8, 7);
+				double igst = (double) billTableModel.getValueAt(8, 7);
+				double roundOff = (double) billTableModel.getValueAt(9, 7);
 				double totalAmountWithGST = (double) billTableModel.getValueAt(10, 7);
-				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, 0, cgst, sgst, roundOff, 0,	totalAmountWithGST);
+				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, igst, cgst, sgst, roundOff, 0,	totalAmountWithGST);
 				for (int i = 0; i < ProjectConstants.maxItems; i++) {
 					String itemDesc = (String) billTableModel.getValueAt(i, 1);
 					double gstRate = (double) billTableModel.getValueAt(i, 3);
@@ -396,6 +397,7 @@ public class BillPanel extends JPanel{
 		});
 		
 		icsGstCheckBox = new JCheckBox("IGST");
+		icsGstCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		icsGstCheckBox.addActionListener(new ActionListener() {
 			
 			@Override
