@@ -46,6 +46,28 @@ public class InvoicePrinter {
 		billHeaderObj.despatchedThrough = "---add despatched---";
 		billHeaderObj.destination = "---add destination---";
 		controlParam.BillHeaderInputParamsObj = billHeaderObj;
+		
+		double totalQuantity = 10;
+		double bardana = 50;
+		double majdoori = 50;
+		double cgst = 500;
+		double sgst = 500;
+		double igst = 500;
+		double roundOff = 10;
+		double totalAmountWithGST = 120000;
+		AllGoods allGoods = controlParam.new AllGoods(totalQuantity, bardana, majdoori, igst, cgst, sgst, roundOff, 0,	totalAmountWithGST);
+		
+			String itemDesc = "Item 1";
+			String hsnSac = "0908";
+			double gstRate = 5;
+			double quanity = 120;
+			double rate = 1000;
+			double amount = 50000;
+				Good good = controlParam.new Good(1, itemDesc, hsnSac, gstRate, quanity, rate, amount);
+				allGoods.addGoodInList(good);
+		
+		controlParam.AllGoodsObj = allGoods;
+		
 		new InvoicePrinter().GeneratePdf(controlParam);
 	}
 
@@ -315,7 +337,7 @@ public class InvoicePrinter {
 				y = y - 15;
 				createContent(cb, 55, y, String.valueOf(good.siNo), PdfContentByte.ALIGN_RIGHT);
 				createContent(cb, 66, y, good.DescriptionOfGoods, PdfContentByte.ALIGN_LEFT);
-				createContent(cb, 228, y, "0908 ", PdfContentByte.ALIGN_LEFT);
+				createContent(cb, 228, y, good.hsnSac, PdfContentByte.ALIGN_LEFT);
 				createContent(cb, 292, y, String.valueOf(good.gstRate)+"%", PdfContentByte.ALIGN_LEFT);
 				createContent(cb, 336, y, String.valueOf(good.quantity)+" KG ", PdfContentByte.ALIGN_LEFT);
 				createContent(cb, 387, y, String.valueOf(good.rate), PdfContentByte.ALIGN_LEFT);
@@ -326,7 +348,9 @@ public class InvoicePrinter {
 				logger.error("Error while adding dynamic content");
 			}
 		}
+		if(allGoodObj.bardana!=0.0)
 		createContent(cb, 465, 450, String.valueOf(allGoodObj.bardana),PdfContentByte.ALIGN_LEFT);
+		if(allGoodObj.majdoori!=0.0)
 		createContent(cb, 465, 438, String.valueOf(allGoodObj.majdoori),PdfContentByte.ALIGN_LEFT);
 		if(BillPanel.iGSTEnabled){
 			createContent(cb, 465, 426, String.valueOf(allGoodObj.igst),PdfContentByte.ALIGN_LEFT);
@@ -342,10 +366,11 @@ public class InvoicePrinter {
 			createContent(cb, 380, 200, String.valueOf(allGoodObj.cgst),PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 480, 215, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 480, 200, String.valueOf(allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 290, 215, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.cgst-allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
-			createContent(cb, 290, 200, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.cgst-allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 280, 215, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.cgst-allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
+			createContent(cb, 280, 200, String.valueOf(allGoodObj.totalAmountWithGST-allGoodObj.cgst-allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
 			createContent(cb, 160, 180, NumberToWord.NumberToCurrency(allGoodObj.cgst+allGoodObj.sgst),PdfContentByte.ALIGN_LEFT);
 		}
+		if(allGoodObj.roundOff!=0.0)
 		createContent(cb, 465, 402, String.valueOf(allGoodObj.roundOff),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 465, 293, String.valueOf(allGoodObj.totalAmountWithGST),PdfContentByte.ALIGN_LEFT);
 		createContent(cb, 350, 293, String.valueOf(allGoodObj.totalQuantity),PdfContentByte.ALIGN_LEFT);

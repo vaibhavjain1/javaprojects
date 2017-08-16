@@ -1,9 +1,11 @@
 package InvoiceUI;
 
+import java.text.DecimalFormat;
+
 public class ProjectConstants {
 
 	public static final String ApplicationName = null;
-	public static String frameIcon;
+	public static String frameIcon = "resources/favicon.png";
 	
 	/* Heading */
 	public static String taxInvoiceHeading = "Tax Invoice";
@@ -27,6 +29,7 @@ public class ProjectConstants {
 	public static String generatedPdfFolder = "resources/";
 	public static String nkcSupply = "NKC/SUPPLY/";
 	public static int maxItems = 4;
+	public static DecimalFormat dFormat = new DecimalFormat(".##");
 	
 	/* Table Headings */
 	public static String siHeading = "SI";
@@ -73,5 +76,6 @@ public class ProjectConstants {
 	public static String authSign = "Authorised Signatory";
 	public static String compInvoice = "This is a Computer Generated Invoice";
 	
-	
+	public static String productName = "GST Bill Generator";
+	public static String productVersion = "1.0";
 }

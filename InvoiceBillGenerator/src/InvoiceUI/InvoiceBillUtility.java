@@ -59,6 +59,19 @@ public class InvoiceBillUtility {
 		billPanel = new BillPanel();
 		billPanel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		tabbedPane.addTab(ProjectConstants.taxInvoiceHeading, null, billPanel, null);
+		
+		// set image icon
+				BufferedImage images = null;
+				try {
+					File imageFile = new File(ProjectConstants.frameIcon);
+					images = ImageIO.read(imageFile);
+					frame.setIconImage(images);
+				} catch (IOException e) {
+					System.out.println("Could not find app icon : "
+							+ ProjectConstants.frameIcon);
+					// e.printStackTrace();
+				}
+		frame.setTitle(ProjectConstants.productName+" "+ProjectConstants.productVersion);
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

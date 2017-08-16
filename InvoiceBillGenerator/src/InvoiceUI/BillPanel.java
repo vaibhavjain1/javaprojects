@@ -1,17 +1,27 @@
 package InvoiceUI;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EventObject;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultCellEditor;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -27,7 +37,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
+import javax.swing.text.JTextComponent;
 
 import invoicegenerator.ControllerParams;
 import invoicegenerator.ControllerParams.AllGoods;
@@ -156,8 +168,11 @@ public class BillPanel extends JPanel{
 				return true;
 			}
 		}
-
+		
 		public void setValueAt(Object value, int row, int col) {
+			if(value instanceof Double){
+				value = ProjectConstants.dFormat.format(value);
+			}
 			billData[row][col] = value;
 			fireTableCellUpdated(row, col);
 			// if quantity || quantity is updated
@@ -177,22 +192,20 @@ public class BillPanel extends JPanel{
 				
 				//update IGST, CGST and SGST
 				double sum = 0.0;
+				for (int i = 0; i < 6; i++) {
+					sum += Double.parseDouble(billData[i][7].toString());
+				}
+				sum = Double.parseDouble(ProjectConstants.dFormat.format(sum));
 				if(iGSTEnabled){
 					billData[8][7] = 0.0;
-					
-					for (int i = 0; i < 6; i++) {
-						sum += Double.parseDouble(billData[i][7].toString());
-					}
-					billData[8][7] = (sum * 5.0)/100;
+					billData[8][7] = Double.parseDouble(ProjectConstants.dFormat.format((sum * 5.0)/100));
 					fireTableCellUpdated(8, 7);
 				}else{
 					billData[6][7] = 0.0;
 					billData[7][7] = 0.0;
-					for (int i = 0; i < 6; i++) {
-						sum += Double.parseDouble(billData[i][7].toString());
-					}
-					billData[6][7] = (sum * 2.5)/100;
-					billData[7][7] = (sum * 2.5)/100;
+					
+					billData[6][7] = Double.parseDouble(ProjectConstants.dFormat.format((sum * 2.5)/100));
+					billData[7][7] = Double.parseDouble(ProjectConstants.dFormat.format((sum * 2.5)/100));
 					fireTableCellUpdated(6, 7);
 					fireTableCellUpdated(7, 7);
 				}
@@ -202,7 +215,7 @@ public class BillPanel extends JPanel{
 				for (int i = 0; i < 10; i++) {
 					totalSum += Double.parseDouble(billData[i][7].toString());
 				}
-				billData[10][7] = totalSum;
+				billData[10][7] = ProjectConstants.dFormat.format(totalSum);;
 				fireTableCellUpdated(10, 7);
 				
 				TableModel breakUpTableModel  = breakUpTable.getModel();
@@ -257,11 +270,25 @@ public class BillPanel extends JPanel{
         table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
         
         table.setRowHeight(24);
-        
+        table.setSelectionBackground(Color.green);
+        table.setCellEditor(null);
     }
 	
+	public class SelectAllCellEditor extends DefaultCellEditor
+	{
+	    public SelectAllCellEditor(final JTextField textField ) {
+	        super( textField );
+	        textField.addFocusListener( new FocusAdapter()
+	        {
+	            public void focusGained( final FocusEvent e )
+	            {
+	                textField.selectAll();
+	            }
+	        } );
+	    }
+	}
+	
 	private void clearAll() {
-		//TODO
 	}
 	
 	public BillPanel() {
@@ -280,7 +307,7 @@ public class BillPanel extends JPanel{
 		buyerAddressTextArea = new JTextArea();
 		buyerAddressTextArea.setLineWrap(true);
 		buyerAddressTextArea.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.buyerAddressHeading, 0, 0));
-		buyerAddressTextArea.setFont(new Font("Verdana", Font.PLAIN, 16));
+		buyerAddressTextArea.setFont(new Font("Verdana", Font.PLAIN, 13));
 		
 		invoiceNumTextField = new JTextField();
 		invoiceNumTextField.setColumns(10);
@@ -323,7 +350,24 @@ public class BillPanel extends JPanel{
 		destinationTextField.setColumns(10);
 		destinationTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.destinationHeading, 0, 0));
 
-		billTable = new JTable(new BillTableModel());
+		billTable = new JTable(new BillTableModel()){
+			@Override // Always selectAll()
+		    public boolean editCellAt(int row, int column, EventObject e) {
+		        boolean result = super.editCellAt(row, column, e);
+		        final Component editor = getEditorComponent();
+		        if (editor == null || !(editor instanceof JTextComponent)) {
+		            return result;
+		        }
+		        if (e instanceof MouseEvent) {
+		            EventQueue.invokeLater(() -> {
+		                ((JTextComponent) editor).selectAll();
+		            });
+		        } else {
+		            ((JTextComponent) editor).selectAll();
+		        }
+		        return result;
+		    }
+		};
 		billTableAlignCellAndRow(billTable);
 		billTableScrollPane = new JScrollPane(billTable);
 		
@@ -373,12 +417,13 @@ public class BillPanel extends JPanel{
 				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, igst, cgst, sgst, roundOff, 0,	totalAmountWithGST);
 				for (int i = 0; i < ProjectConstants.maxItems; i++) {
 					String itemDesc = (String) billTableModel.getValueAt(i, 1);
+					String hsnSac = (String) billTableModel.getValueAt(i, 2);
 					double gstRate = (double) billTableModel.getValueAt(i, 3);
 					double quanity = (double) billTableModel.getValueAt(i, 4);
 					double rate = (double) billTableModel.getValueAt(i, 5);
 					double amount = (double) billTableModel.getValueAt(i, 7);
 					if (itemDesc != null && itemDesc.trim() != "") {
-						Good good = paramObj.new Good(i + 1, itemDesc, gstRate, quanity, rate, amount);
+						Good good = paramObj.new Good(i + 1, itemDesc, hsnSac, gstRate, quanity, rate, amount);
 						allGoods.addGoodInList(good);
 					}
 				}
