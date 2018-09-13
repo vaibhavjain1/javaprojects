@@ -1,5 +1,7 @@
 package com.backend;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -30,10 +32,10 @@ public class HibernateSessionFactory {
 	
 	public static void main(String[] args) {
 		LoginInfo obj = new LoginInfo();
-		obj.setLogin_UserName("Ganesh1");
+		obj.setLogin_UserName("Ganesh"+new Date());
 		obj.setLogin_Password("Ganesh");
 		obj.setLogin_FirstName("Ganesh");
-		obj.setLogin_SecondName("Mahadev");
+		obj.setLogin_LastName("Mahadev");
 		obj.setLogin_PhoneNo("9742442667");
 		obj.setLogin_RecoveryEmail("abc@gmail.com");
 		

@@ -29,7 +29,7 @@
 			create: creates the schema, destroying previous data.
 			create-drop: drop the schema when the SessionFactory is closed explicitly, typically when the application is stopped.
 		-->	
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
  
         <!-- Mention here all the model classes along with their package name -->
  		<mapping class="com.backend.model.CandidateInfo"/>

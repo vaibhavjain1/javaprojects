@@ -10,4 +10,5 @@ public interface LoginDao {
 	
 	public List<LoginInfo> listOfUsers();
 
+	public boolean login(LoginInfo p);
 }

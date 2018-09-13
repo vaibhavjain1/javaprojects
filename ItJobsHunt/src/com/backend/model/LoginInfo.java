@@ -1,13 +1,17 @@
 package com.backend.model;
 
 import java.util.Base64;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,10 +39,10 @@ public class LoginInfo {
 	@Setter
 	private String login_FirstName;
 	
-	@Column(name = "Login_SecondName")
+	@Column(name = "Login_LastName")
 	@Getter
 	@Setter
-	private String login_SecondName;
+	private String login_LastName;
 	
 	@Column(name = "Login_PhoneNo", nullable = false)
 	@Getter
@@ -49,6 +53,23 @@ public class LoginInfo {
 	@Getter
 	@Setter
 	private String login_RecoveryEmail;
+	
+	@Column(name = "Login_Dp")
+	@Lob
+	@Getter
+	@Setter
+	private byte[] login_db;
+	
+	@Column(name = "Login_Active", nullable = false)
+	@Getter
+	@Setter
+	private boolean login_active = true;
+	
+	/*@Column(name = "Login_last", nullable = false)
+	@Getter
+	@Setter
+	@ColumnDefault("GETDATE()")
+	private Date login_last;*/
 	
 	public String getLogin_Password() {
 		byte[] decodedBytes = Base64.getDecoder().decode(login_Password);

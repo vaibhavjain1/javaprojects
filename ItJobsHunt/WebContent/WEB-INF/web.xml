@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>RestLoginService</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>/WEB-INF/Backoffice/src/index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>default.html</welcome-file>
@@ -10,9 +10,9 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <listener>
-  	<listener-class>com.backend.HibernateListener</listener-class>
+  	<listener-class>com.backend.ApplicationInitializer</listener-class>
   </listener>
-  <!--servlet>
+  <servlet>
     <servlet-name>jersey-serlvet</servlet-name>
     <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
     <init-param>
@@ -24,5 +24,5 @@
   <servlet-mapping>
     <servlet-name>jersey-serlvet</servlet-name>
     <url-pattern>/api/*</url-pattern>
-  </servlet-mapping-->
+  </servlet-mapping>
 </web-app>
