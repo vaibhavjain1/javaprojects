@@ -11,10 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import com.utilities.ToolLogger;
 
 @Entity
 @Table(name = "logininfo")
@@ -68,16 +68,25 @@ public class LoginInfo {
 	/*@Column(name = "Login_last", nullable = false)
 	@Getter
 	@Setter
-	@ColumnDefault("GETDATE()")
 	private Date login_last;*/
 	
 	public String getLogin_Password() {
-		byte[] decodedBytes = Base64.getDecoder().decode(login_Password);
-		return decodedBytes.toString();
+		byte[] decodedBytes;
+		try {
+			decodedBytes = Base64.getDecoder().decode(login_Password);
+			return decodedBytes.toString();
+		} catch (Exception e) {
+			ToolLogger.logger.debug("password is not Base64 encoded");
+			return login_Password;
+		}
 	}
 
 	public void setLogin_Password(String login_Password) {
-		byte[] encodedBytes = Base64.getEncoder().encode(login_Password.getBytes());
-		this.login_Password = encodedBytes.toString();
+		String encodedBytes = Base64.getEncoder().encodeToString(login_Password.getBytes());
+		this.login_Password = encodedBytes;
+	}
+	
+	public String getEncodedPassword(){
+		return Base64.getEncoder().encodeToString(login_Password.getBytes());
 	}
 }

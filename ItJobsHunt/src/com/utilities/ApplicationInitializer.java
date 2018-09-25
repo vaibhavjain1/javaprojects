@@ -1,8 +1,9 @@
-package com.backend;
+package com.utilities;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.backend.HibernateSessionFactory;
 import com.utilities.ToolLogger;
 
 // This listener initializes and closes Hibernate on deployment and undeployment,
