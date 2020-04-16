@@ -13,5 +13,8 @@
 
 	<mvc:annotation-driven />
 	
+	<!-- This is required to handle spring requests along with simple html website -->
+	<mvc:default-servlet-handler/>
+	
 	<import resource="classpath:/applicationContext.xml"/>
 </beans>

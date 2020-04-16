@@ -16,7 +16,8 @@ public class DefaultController {
 	@Autowired
 	private ApplicationContext context;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	//@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "servicecheck", method = RequestMethod.GET)
 	public String index() {	
 		return Constants.ANVIZO + " Service is up";
 	}
