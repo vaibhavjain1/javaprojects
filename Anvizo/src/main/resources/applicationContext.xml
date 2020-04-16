@@ -28,12 +28,12 @@
 				<entry key="mail.smtp.host" value="${email.smtp.host}" />
 				<entry key="mail.smtp.port" value="${email.smtp.port}" />
 				<entry key="mail.transport.protocol" value="${email.smtp.transport}" />
+				<entry key="mail.smtp.starttls.enable" value="${email.smtp.starttls}" />
+				<entry key="mail.smtp.auth" value="${email.smtp.auth}" />
 			</map>
 		</constructor-arg>
-		<constructor-arg value="${email.smtp.auth}" />
 		<constructor-arg value="${email.smtp.username}" />
 		<constructor-arg value="${email.smtp.password}" />
-		<constructor-arg value="${email.smtp.defaultfromaddress}" />
 	</bean>
 
 	<!-- context:property-placeholder location="classpath:/database.properties" 

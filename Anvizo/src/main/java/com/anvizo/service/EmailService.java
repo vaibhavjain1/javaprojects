@@ -8,6 +8,7 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.stereotype.Service;
 
 import com.anvizo.factory.EmailFactory;
+import com.anvizo.util.Constants;
 
 @Service
 public class EmailService {
@@ -23,10 +24,9 @@ public class EmailService {
 			MimeMessage message = emailer.createMessage();
 			message.setSubject("Subject");
             message.setText("body");
-            message.addRecipient(RecipientType.TO,new InternetAddress("abvaibhav@gmail.com"));
+            message.addRecipient(RecipientType.TO,new InternetAddress(Constants.SUPPORT_EMAIL));
             emailer.sendMail(message);
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
