@@ -1,5 +1,6 @@
 package com.anvizo.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,9 +17,12 @@ public class DefaultController {
 	@Autowired
 	private ApplicationContext context;
 	
+	private static final Logger LOG = Logger.getLogger(DefaultController.class);
+	
 	//@RequestMapping(value = "/", method = RequestMethod.GET)
 	@RequestMapping(value = "servicecheck", method = RequestMethod.GET)
-	public String index() {	
+	public String index() {
+		LOG.info(Constants.ANVIZO + " Service is up");
 		return Constants.ANVIZO + " Service is up";
 	}
 	
