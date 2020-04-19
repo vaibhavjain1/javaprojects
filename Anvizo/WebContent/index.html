@@ -1,9 +1,28 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Anvizo</title>
-  </head>
-  <body>
-    <p>Sample index.html page of Anvizo</p>
-  </body>
+<head>
+<title>Anvizo</title>
+</head>
+<body>
+	<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+	<p>Sample index.html page of Anvizo</p>
+	<button onclick="myFunction()">Click me</button>
+
+	<p id="demo"></p>
+
+	<script>
+		function myFunction() {
+			document.getElementById("demo").innerHTML = "Hello World";
+			$.ajax({
+				url : "http://www.jobserviceprovider.com/Anvizo/servicecheck",
+				success : function(result) {
+					document.getElementById("demo").innerHTML = result;
+				},
+				error : function(result) {
+					document.getElementById("demo").innerHTML = 'error'+result;
+				}
+			});
+		}
+	</script>
+</body>
 </html>

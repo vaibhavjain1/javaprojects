@@ -8,7 +8,7 @@
 	<name>Anvizo</name>
 	<description>Anvizo</description>
 	<properties>
-		<jackson.version>2.11.0.rc1</jackson.version>
+		<jackson.version>2.10.3</jackson.version>
 		<spring.version>5.2.5.RELEASE</spring.version>
 		<lombok.version>1.18.12</lombok.version>
 		<mail.version>1.4</mail.version>
@@ -29,6 +29,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -42,7 +43,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>Anvizo</finalName>
+		<finalName>ROOT</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>

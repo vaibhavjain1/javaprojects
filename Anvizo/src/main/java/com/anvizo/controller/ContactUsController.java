@@ -21,6 +21,7 @@ public class ContactUsController {
 
 	@PostMapping(path = Constants.CONTACT_US_CONTROLLER, consumes = MediaType.APPLICATION_JSON_VALUE)
 	ContactUs postObject(@RequestBody ContactUs email) {
+		LOG.info("Recieved post request for contactus");
 		emailService.sendContactUsEmail();
 		return email;
 	}
