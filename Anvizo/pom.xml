@@ -8,7 +8,7 @@
 	<name>Anvizo</name>
 	<description>Anvizo</description>
 	<properties>
-		<jackson.version>2.10.3</jackson.version>
+		<jackson.version>2.9.10.4</jackson.version>
 		<spring.version>5.2.5.RELEASE</spring.version>
 		<lombok.version>1.18.12</lombok.version>
 		<mail.version>1.4</mail.version>
