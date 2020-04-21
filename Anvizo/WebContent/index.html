@@ -14,7 +14,15 @@
 		function myFunction() {
 			document.getElementById("demo").innerHTML = "Hello World";
 			$.ajax({
-				url : "http://www.jobserviceprovider.com/Anvizo/servicecheck",
+				url : "http://localhost:8080/Anvizo/contactus",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify({
+				    "name": "name",
+				    "email": "2email",
+				    "subject": "subject",
+				    "message": "message"
+				}),
 				success : function(result) {
 					document.getElementById("demo").innerHTML = result;
 				},
