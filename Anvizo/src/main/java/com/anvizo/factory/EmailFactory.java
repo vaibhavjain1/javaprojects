@@ -10,6 +10,7 @@ import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import lombok.Data;
@@ -35,15 +36,18 @@ public class EmailFactory {
 			mailProps.put(cfg.getKey(), cfg.getValue());
 
 		}
+		
+		String inUsername = new String(Base64.getDecoder().decode(username));
+		String inpassword = new String(Base64.getDecoder().decode(password));
+		
 		Session mailSession = Session.getDefaultInstance(mailProps, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				String inUsername = new String(Base64.getDecoder().decode(username));
-				String inpassword = new String(Base64.getDecoder().decode(password));
 				return new PasswordAuthentication(inUsername, inpassword);
 			}
 		});
 
 		MimeMessage msg = new MimeMessage(mailSession);
+		msg.setFrom(new InternetAddress(inUsername));
 		msg.setSentDate(new Date());
 		return msg;
 	}

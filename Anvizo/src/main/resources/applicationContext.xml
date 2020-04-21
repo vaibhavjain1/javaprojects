@@ -27,7 +27,6 @@
 			<map>
 				<entry key="mail.smtp.host" value="${email.smtp.host}" />
 				<entry key="mail.smtp.port" value="${email.smtp.port}" />
-				<entry key="mail.smtp.starttls.enable" value="${email.smtp.starttls}" />
 				<entry key="mail.smtp.auth" value="${email.smtp.auth}" />
 			</map>
 		</constructor-arg>
