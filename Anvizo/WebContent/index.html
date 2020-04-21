@@ -12,9 +12,10 @@
 
 	<script>
 		function myFunction() {
+			let currUrl = "http://www.jobserviceprovider.com/";
 			document.getElementById("demo").innerHTML = "Hello World";
 			$.ajax({
-				url : "http://localhost:8080/Anvizo/contactus",
+				url : currUrl + "contactus",
 				type: "POST",
 				contentType: "application/json",
 				data: JSON.stringify({
