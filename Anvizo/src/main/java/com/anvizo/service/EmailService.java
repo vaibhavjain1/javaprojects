@@ -1,7 +1,6 @@
 package com.anvizo.service;
 
 import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
@@ -30,6 +29,7 @@ public class EmailService {
             message.setText("body");
             message.addRecipient(RecipientType.TO,new InternetAddress(Constants.SUPPORT_EMAIL));
             emailer.sendMail(message);
+            LOG.info("Message sent to:"+Constants.SUPPORT_EMAIL);
 		} catch (Exception e) {
 			LOG.error("Error while sending contactus message", e);
 		}
