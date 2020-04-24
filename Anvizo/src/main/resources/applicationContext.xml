@@ -51,9 +51,6 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<!--prop key="hibernate.generate_statistics">true</prop>
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop-->
 				<!--
         			validate: validate the schema, makes no changes to the database.
 					update: update the schema.
