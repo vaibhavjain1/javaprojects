@@ -27,14 +27,6 @@
 	<servlet>
 		<servlet-name>PhpCGIServlet</servlet-name>
 		<servlet-class>php.java.servlet.fastcgi.FastCGIServlet</servlet-class>
-		<init-param>
-			<param-name>prefer_system_php_exec</param-name>
-			<param-value>On</param-value>
-		</init-param>
-		<init-param>
-			<param-name>php_include_java</param-name>
-			<param-value>Off</param-value>
-		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>PhpJavaServlet</servlet-name>
@@ -45,8 +37,9 @@
 		<url-pattern>*.php</url-pattern>
 	</servlet-mapping>
 
-	<!--welcome-file-list>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.php</welcome-file>
-	</welcome-file-list-->
+	</welcome-file-list>
 	<!-- Wordpress end -->
 </web-app>
