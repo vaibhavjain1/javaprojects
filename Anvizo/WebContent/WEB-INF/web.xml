@@ -15,31 +15,8 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<!-- For Wordpress -->
-	<listener>
-		<listener-class>php.java.servlet.ContextLoaderListener</listener-class>
-	</listener>
-	<servlet>
-		<servlet-name>PhpJavaServlet</servlet-name>
-		<servlet-class>php.java.servlet.PhpJavaServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>PhpCGIServlet</servlet-name>
-		<servlet-class>php.java.servlet.fastcgi.FastCGIServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PhpJavaServlet</servlet-name>
-		<url-pattern>*.phpjavabridge</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>PhpCGIServlet</servlet-name>
-		<url-pattern>*.php</url-pattern>
-	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.php</welcome-file>
 	</welcome-file-list>
-	<!-- Wordpress end -->
 </web-app>
