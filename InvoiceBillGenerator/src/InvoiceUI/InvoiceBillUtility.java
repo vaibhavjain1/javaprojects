@@ -18,7 +18,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-
 public class InvoiceBillUtility {
 
 	private JFrame frame;

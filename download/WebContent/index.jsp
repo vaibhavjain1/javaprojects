@@ -24,7 +24,7 @@ position: relative;
 
 h3 {
 	position: absolute;
-	top: -115px;
+	top: -85px;
 	left: 35px;
 	color: white;
 	font-weight: 600;

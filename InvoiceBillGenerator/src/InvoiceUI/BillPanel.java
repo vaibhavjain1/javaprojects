@@ -13,9 +13,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
@@ -26,6 +24,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,7 +36,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 import javax.swing.text.JTextComponent;
 
@@ -46,7 +44,6 @@ import invoicegenerator.ControllerParams.AllGoods;
 import invoicegenerator.ControllerParams.BillHeaderInputParams;
 import invoicegenerator.ControllerParams.Good;
 import invoicegenerator.InvoicePrinter;
-import javax.swing.JCheckBox;
 
 class BreakUpTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
@@ -276,7 +273,9 @@ public class BillPanel extends JPanel{
 	
 	public class SelectAllCellEditor extends DefaultCellEditor
 	{
-	    public SelectAllCellEditor(final JTextField textField ) {
+		private static final long serialVersionUID = -5892354312576646394L;
+
+		public SelectAllCellEditor(final JTextField textField ) {
 	        super( textField );
 	        textField.addFocusListener( new FocusAdapter()
 	        {
@@ -351,6 +350,8 @@ public class BillPanel extends JPanel{
 		destinationTextField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(null, 1), ProjectConstants.destinationHeading, 0, 0));
 
 		billTable = new JTable(new BillTableModel()){
+			private static final long serialVersionUID = 1L;
+
 			@Override // Always selectAll()
 		    public boolean editCellAt(int row, int column, EventObject e) {
 		        boolean result = super.editCellAt(row, column, e);
@@ -406,22 +407,22 @@ public class BillPanel extends JPanel{
 				paramObj.BillHeaderInputParamsObj = billHeaderObj;
 
 				TableModel billTableModel = billTable.getModel();
-				double totalQuantity = (double) billTableModel.getValueAt(10, 4);
-				double bardana = (double) billTableModel.getValueAt(4, 7);
-				double majdoori = (double) billTableModel.getValueAt(5, 7);
-				double cgst = (double) billTableModel.getValueAt(6, 7);
-				double sgst = (double) billTableModel.getValueAt(7, 7);
-				double igst = (double) billTableModel.getValueAt(8, 7);
-				double roundOff = (double) billTableModel.getValueAt(9, 7);
-				double totalAmountWithGST = (double) billTableModel.getValueAt(10, 7);
+				double totalQuantity = Double.parseDouble(billTableModel.getValueAt(10, 4).toString());
+				double bardana = Double.parseDouble(billTableModel.getValueAt(4, 7).toString());
+				double majdoori = Double.parseDouble(billTableModel.getValueAt(5, 7).toString());
+				double cgst = Double.parseDouble(billTableModel.getValueAt(6, 7).toString());
+				double sgst = Double.parseDouble(billTableModel.getValueAt(7, 7).toString());
+				double igst = Double.parseDouble(billTableModel.getValueAt(8, 7).toString());
+				double roundOff = Double.parseDouble(billTableModel.getValueAt(9, 7).toString());
+				double totalAmountWithGST = Double.parseDouble(billTableModel.getValueAt(10, 7).toString());
 				AllGoods allGoods = paramObj.new AllGoods(totalQuantity, bardana, majdoori, igst, cgst, sgst, roundOff, 0,	totalAmountWithGST);
 				for (int i = 0; i < ProjectConstants.maxItems; i++) {
-					String itemDesc = (String) billTableModel.getValueAt(i, 1);
-					String hsnSac = (String) billTableModel.getValueAt(i, 2);
-					double gstRate = (double) billTableModel.getValueAt(i, 3);
-					double quanity = (double) billTableModel.getValueAt(i, 4);
-					double rate = (double) billTableModel.getValueAt(i, 5);
-					double amount = (double) billTableModel.getValueAt(i, 7);
+					String itemDesc = billTableModel.getValueAt(i, 1).toString();
+					String hsnSac = billTableModel.getValueAt(i, 2).toString();
+					double gstRate = Double.parseDouble(billTableModel.getValueAt(i, 3).toString());
+					double quanity = Double.parseDouble(billTableModel.getValueAt(i, 4).toString());
+					double rate = Double.parseDouble(billTableModel.getValueAt(i, 5).toString());
+					double amount = Double.parseDouble(billTableModel.getValueAt(i, 7).toString());
 					if (itemDesc != null && itemDesc.trim() != "") {
 						Good good = paramObj.new Good(i + 1, itemDesc, hsnSac, gstRate, quanity, rate, amount);
 						allGoods.addGoodInList(good);
