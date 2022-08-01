@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mytests</groupId>
+  <artifactId>SpiroDemo</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>SpireDemp</name>
+  
+  <repositories>
+
+        <repository>
+
+            <id>com.e-iceblue</id>
+
+            <name>e-iceblue</name>
+
+            <url>http://repo.e-iceblue.com/nexus/content/groups/public/</url>
+
+        </repository>
+
+</repositories>
+  
+  <dependencies>
+
+    <dependency>
+
+        <groupId>e-iceblue</groupId>
+
+        <artifactId>spire.pdf.free</artifactId>
+
+        <version>2.2.2</version>
+
+    </dependency>
+
+ <dependency>
+
+        <groupId>e-iceblue</groupId>
+
+        <artifactId>spire.doc</artifactId>
+
+        <version>2.2.0</version>
+
+    </dependency>
+</dependencies>
+  
+  
+</project>
+
