@@ -12,7 +12,7 @@
   <context-param>
     <description>Location of Data</description>
     <param-name>data-location</param-name>
-    <param-value>C:\</param-value>
+    <param-value>E:\Data</param-value>
   </context-param>
   <context-param>
   	<description>Location of temporary video file</description>
