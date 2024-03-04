@@ -1,4 +1,4 @@
-package com.amazonaws.samples;
+package com.amazonaws.s3Samples;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

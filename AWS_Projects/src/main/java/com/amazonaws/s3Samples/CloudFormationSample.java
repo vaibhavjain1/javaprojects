@@ -1,4 +1,4 @@
-package com.amazonaws.samples;
+package com.amazonaws.s3Samples;
 /*
  * Copyright 2011-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *

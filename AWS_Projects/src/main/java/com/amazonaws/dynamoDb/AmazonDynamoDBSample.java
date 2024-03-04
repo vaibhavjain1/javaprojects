@@ -1,4 +1,4 @@
-package com.amazonaws.samples;
+package com.amazonaws.dynamoDb;
 /*
  * Copyright 2012-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -18,10 +18,7 @@ import java.util.Map;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;

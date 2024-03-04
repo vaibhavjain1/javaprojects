@@ -1,9 +1,7 @@
-package com.amazonaws.samples;
+package com.amazonaws.s3Samples;
 
 import java.sql.ResultSet;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 public class TestJsonObjectv {
 

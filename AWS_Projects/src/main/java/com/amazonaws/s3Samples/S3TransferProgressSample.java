@@ -1,4 +1,4 @@
-package com.amazonaws.samples;
+package com.amazonaws.s3Samples;
 /*
  * Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  *
@@ -28,8 +28,6 @@ import javax.swing.JProgressBar;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.event.ProgressEvent;
